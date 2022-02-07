@@ -1,0 +1,40 @@
+.navbar {
+  margin-bottom: 20px;
+  .list_navbar {
+    column-gap: 5px;
+    .navbar_item {
+      background: rgba(255, 255, 255, 0.07);
+      flex: 1 1 0;
+      min-width: 0;
+      text-align: center;
+      transition: all 400ms ease-in-out;
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transition: all 400ms ease-in-out;
+      }
+      &:first-child {
+        border-radius: 0.5rem 0 0 0.5rem;
+      }
+      &:last-child {
+        border-radius: 0 0.5rem 0.5rem 0;
+        padding: 12px 0;
+        cursor: pointer;
+        &:hover {
+          transition: all 400ms ease-in-out;
+          color: #fff;
+          background: rgba(255, 255, 255, 0.1);
+        }
+      }
+      a {
+        transition: all 0.4s ease;
+        padding: 12px 0;
+        display: inline-block;
+        width: 100%;
+        &:hover {
+          color: #fff;
+          transition: all 0.4s ease;
+        }
+      }
+    }
+  }
+}
