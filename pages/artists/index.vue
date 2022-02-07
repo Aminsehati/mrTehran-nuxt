@@ -1,7 +1,16 @@
 <template>
   <div class="artists-page">
     <div class="container-sm">
-      <div class="artist-wrapper grid xl:grid-cols-3 sm:grid-cols-2 gap-x-20 gap-y-20">
+      <Title class="mb-20"> Popular Artists </Title>
+      <div
+        class="
+          artist-wrapper
+          grid
+          xl:grid-cols-3
+          sm:grid-cols-2
+          gap-x-20 gap-y-20
+        "
+      >
         <ArtistItem
           :ArtistInfo="artist"
           v-for="artist in listArtists"

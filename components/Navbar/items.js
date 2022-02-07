@@ -16,7 +16,7 @@ const items = [{
   {
     id: 4,
     name: "Playlists",
-    path: "/",
+    path: "/playlists",
   },
   {
     id: 5,
