@@ -65,28 +65,35 @@ export default {
       },
       {
         rel: 'icon',
-        type:"image/png",
+        type: "image/png",
         sizes: "192x192",
         href: '/android-icon-192x192.png',
       },
       {
         rel: 'icon',
-        type:"image/png",
+        type: "image/png",
         sizes: "32x32",
         href: '/favicon-32x32.png',
       },
       {
         rel: 'icon',
-        type:"image/png",
+        type: "image/png",
         sizes: "96x96",
         href: '/favicon-96x96.png',
       },
       {
         rel: 'icon',
-        type:"image/png",
+        type: "image/png",
         sizes: "16x16",
         href: '/favicon-16x16.png',
       },
+      {
+        rel: "stylesheet",
+        href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css",
+        integrity: "sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==",
+        crossorigin: "anonymous",
+        referrerpolicy: "no-referrer"
+      }
     ]
   },
   css: [

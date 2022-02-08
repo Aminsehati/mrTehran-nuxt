@@ -39,3 +39,6 @@ ul,li{
 .font-800 {
   font-weight: 800;
 }
+img[src="unknown"]{
+  opacity: 0;
+}

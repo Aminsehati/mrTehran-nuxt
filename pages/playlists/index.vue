@@ -25,13 +25,7 @@
 export default {
   data() {
     return {
-      playListsItems: [
-        {
-          id: 1,
-          name: "Turkish",
-          image: "https://cdnmrtehran.ir/media/genremood/5e888a5436ec2.jpg",
-        },
-      ],
+      playListsItems: [],
     };
   },
   mounted() {
@@ -40,6 +34,7 @@ export default {
         id: 1,
         name: "Turkish",
         image: "https://cdnmrtehran.ir/media/genremood/5e888a5436ec2.jpg",
+        Followers:10000
       });
     }
   },

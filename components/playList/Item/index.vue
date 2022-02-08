@@ -5,12 +5,17 @@
         <img :src="playListInfo.image" />
       </div>
       <div class="content pl-15">
-          <h2 class="name-playlist">
-              {{
-                playListInfo.name  
-              }}
-          </h2>
+        <h2 class="name-playlist">
+          {{ playListInfo.name }}
+        </h2>
+        <p class="text-light followers">
+          <!-- <i class="fa-regular fa-user text-12"></i> -->
+          {{ Followers(playListInfo.Followers) }}
+        </p>
       </div>
+      <span class="px-15">
+        <i class="fa-solid fa-angle-right text-light text-12"></i>
+      </span>
     </nuxt-link>
   </div>
 </template>
@@ -22,6 +27,11 @@ export default {
     playListInfo: {
       type: Object,
       default: () => {},
+    },
+  },
+  methods: {
+    Followers(count) {
+      return `${count / 1000}k`;
     },
   },
 };

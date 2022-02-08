@@ -25,13 +25,7 @@
 export default {
   data() {
     return {
-      listArtists: [
-        {
-          id: 1,
-          name: "Masih & Arash",
-          image: "https://cdnmrtehran.ir/media/artists/5f1d88b131ec5.jpg",
-        },
-      ],
+      listArtists: [],
     };
   },
   mounted() {
@@ -40,6 +34,7 @@ export default {
         id: i + 1,
         name: "Masih & Arash",
         image: "https://cdnmrtehran.ir/media/artists/5f1d88b131ec5.jpg",
+        Followers:10000
       });
     }
   },
