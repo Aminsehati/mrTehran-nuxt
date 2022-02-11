@@ -22,21 +22,27 @@
 </template>
 
 <script>
+import getPlayList from "@/graphql/queries/playList/getPlayLists.gql";
 export default {
   data() {
     return {
       playListsItems: [],
     };
   },
+  methods: {
+    async getPlayListItem() {
+      try {
+        const httpResponse = await this.$apollo.query({
+          query: getPlayList,
+        });
+        const data = httpResponse.data.getPlayLists;
+        this.playListsItems = data;
+        console.log(data);
+      } catch (error) {}
+    },
+  },
   mounted() {
-    for (let i = 0; i <= 22; i++) {
-      this.playListsItems.push({
-        id: 1,
-        name: "Turkish",
-        image: "https://cdnmrtehran.ir/media/genremood/5e888a5436ec2.jpg",
-        Followers:10000
-      });
-    }
+    this.getPlayListItem();
   },
 };
 </script>

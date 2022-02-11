@@ -1,8 +1,8 @@
 <template>
   <div class="playlist-item">
-    <nuxt-link :to="`/playlist/${playListInfo.id}`">
+    <nuxt-link :to="`/playlist/${playListInfo._id}`">
       <div class="image">
-        <img :src="playListInfo.image" />
+        <img :src="getImageUrl(playListInfo.imgUrl)" />
       </div>
       <div class="content pl-15">
         <h2 class="name-playlist">
@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     Followers(count) {
-      return `${count / 1000}k`;
+      return `${count / 1000} k`;
     },
   },
 };

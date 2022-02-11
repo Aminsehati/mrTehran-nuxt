@@ -7,7 +7,10 @@
             {{ navbar.name }}
           </nuxt-link>
         </li>
-        <li class="navbar_item text-light">Search</li>
+        <li class="navbar_item text-light">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          Search
+        </li>
       </ul>
     </div>
   </nav>

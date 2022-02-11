@@ -1,0 +1,9 @@
+query getPlayList($id:ID!){
+  getPlayList(id:$id) {
+    _id
+    name
+    imgUrl
+    coverImgUrl
+    Followers
+  }
+}

@@ -6,7 +6,7 @@
           {{ playListInfo.name }}
         </h2>
         <p class="text-13 text-center text-light mb-20">
-          {{ countFollowers(playListInfo.countFollowers) }}
+          {{ countFollowers(playListInfo.Followers) }}
           Followers
         </p>
         <div class="btn-group">

@@ -19,6 +19,9 @@
         border-radius: 0 0.5rem 0.5rem 0;
         padding: 12px 0;
         cursor: pointer;
+        i {
+          margin-right: 3px;
+        }
         &:hover {
           transition: all 400ms ease-in-out;
           color: #fff;

@@ -1,0 +1,9 @@
+query getPlayLists {
+  getPlayLists {
+    _id
+    name
+    imgUrl
+    coverImgUrl
+    Followers
+  }
+}
