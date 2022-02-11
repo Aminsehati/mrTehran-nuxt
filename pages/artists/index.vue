@@ -1,42 +1,57 @@
 <template>
   <div class="artists-page">
     <div class="container-sm">
-      <Title class="mb-20"> Popular Artists </Title>
-      <div
-        class="
-          artist-wrapper
-          grid
-          xl:grid-cols-3
-          sm:grid-cols-2
-          gap-x-20 gap-y-20
-        "
-      >
-        <ArtistItem
-          :ArtistInfo="artist"
-          v-for="artist in listArtists"
-          :key="artist.id"
-        />
+      <Loading v-if="filters.loading" />
+      <div v-else>
+        <Title class="mb-20"> Popular Artists </Title>
+        <div
+          class="
+            artist-wrapper
+            grid
+            xl:grid-cols-3
+            sm:grid-cols-2
+            gap-x-20 gap-y-20
+          "
+        >
+          <ArtistItem
+            :ArtistInfo="artist"
+            v-for="artist in listArtists"
+            :key="artist.id"
+          />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import "./style.scss";
+import getActors from "../../graphql/queries/Actor/getActors";
 export default {
   data() {
     return {
       listArtists: [],
+      filters: {
+        loading: false,
+      },
     };
   },
   mounted() {
-    for (let i = 0; i <= 12; i++) {
-      this.listArtists.push({
-        id: i + 1,
-        name: "Masih & Arash",
-        image: "https://cdnmrtehran.ir/media/artists/5f1d88b131ec5.jpg",
-        Followers:10000
-      });
-    }
+    this.getlistArtist();
+  },
+  methods: {
+    async getlistArtist() {
+      this.filters.loading = true;
+      try {
+        const httpResponse = await this.$apollo.query({
+          query: getActors,
+        });
+        this.listArtists = httpResponse.data.getActors;
+        this.filters.loading = false;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 </script>

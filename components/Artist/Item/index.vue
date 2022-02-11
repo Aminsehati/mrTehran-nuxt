@@ -1,8 +1,8 @@
 <template>
   <div class="Artist-item">
-    <nuxt-link :to="`/artist/${ArtistInfo.id}`">
+    <nuxt-link :to="`/artist/${ArtistInfo._id}`">
       <div class="image">
-        <img :src="ArtistInfo.image" :alt="ArtistInfo.name" />
+        <img :src="getImageUrl(ArtistInfo.imgUrl)" :alt="ArtistInfo.name" />
       </div>
       <div class="content pl-15">
         <h2 class="name-artist">

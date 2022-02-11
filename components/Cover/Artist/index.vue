@@ -3,7 +3,7 @@
     <div class="wrapper" :style="coverArtist">
       <div class="wrapper-content">
         <h2 class="text-center text-32 font-700">
-          {{ ArtistInfo.title }}
+          {{ ArtistInfo.name }}
         </h2>
         <p class="text-13 text-center text-light mb-20">
           {{ countFollowers(ArtistInfo.countFollowers)}}

@@ -1,4 +1,5 @@
 export default {
+  // loading: "@/components/Loading",
   head: {
     title: 'MrTehran.com - Persian Music Service 24/7',
     meta: [{
@@ -99,7 +100,10 @@ export default {
   css: [
     "@/assets/css/App.scss"
   ],
-  plugins: [],
+  plugins: [{
+    src: '@/plugins/mixins',
+    ssr: true,
+  }],
   components: true,
   buildModules: [
     // '@nuxtjs/eslint-module',
@@ -108,9 +112,17 @@ export default {
   modules: [
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/apollo',
   ],
   axios: {},
+  apollo: {
+    clientConfigs: {
+      default: {
+        httpEndpoint: 'https://mr-tehran-express.vercel.app/graphql',
+      }
+    }
+  },
   pwa: {
     manifest: {
       lang: 'en'

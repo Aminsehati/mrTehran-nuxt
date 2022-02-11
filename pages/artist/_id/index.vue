@@ -1,51 +1,74 @@
 <template>
-  <div>
+  <div class="artist-page">
     <div class="container-sm">
-      <CoverArtist :ArtistInfo="ArtistInfo" />
-      <div class="title_ mb-30">
-        <Title> All Tracks </Title>
-      </div>
-      <div
-        class="
-          tracks-wrapper
-          grid grid
-          xl:grid-cols-3
-          sm:grid-cols-2
-          gap-x-20 gap-y-20
-        "
-      >
-        <TrackItem
-          :trackInfo="track"
-          v-for="track in listTracks"
-          :key="track.id"
-        />
+      <Loading v-if="filters.loading" />
+      <div v-else>
+        <CoverArtist :ArtistInfo="ArtistInfo" />
+        <div class="title_ mb-30">
+          <Title> All Tracks </Title>
+        </div>
+        <div
+          class="
+            tracks-wrapper
+            grid grid
+            xl:grid-cols-3
+            sm:grid-cols-2
+            gap-x-20 gap-y-20
+          "
+        >
+          <TrackItem
+            :trackInfo="track"
+            v-for="track in listTracks"
+            :key="track.id"
+          />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import getActor from "../../../graphql/queries/Actor/getActor.gql";
+import "./style.scss";
 export default {
   data() {
     return {
       ArtistInfo: {
-        title: "Shadmehr Aghili",
-        coverImage: "https://cdnmrtehran.ir/media/artists/5c6edf5ad1baf.jpg",
-        countFollowers: 25000,
+        name: "",
+        coverImage: "",
+        countFollowers: 0,
+      },
+      filters: {
+        loading: false,
       },
       listTracks: [],
     };
   },
   mounted() {
-    for (let i = 0; i <= 22; i++) {
-      this.listTracks.push({
-        id: i + 1,
-        Actor: "Shadmehr Aghili",
-        nameTrack: "Dire",
-        image:
-          "https://cdnmrtehran.ir/media/mp3s/mohsen_yeganeh/mohsen_yeganeh_shahre_khakestari_thumb.jpg",
-      });
-    }
+    this.getArtist();
+  },
+  methods: {
+    async getArtist() {
+      this.filters.loading = true;
+      try {
+        const { id } = this.$route.params;
+        const httpResponse = await this.$apollo.query({
+          query: getActor,
+          variables: {
+            id,
+          },
+        });
+        const data = httpResponse.data.getActor;
+        this.ArtistInfo = {
+          ...this.ArtistInfo,
+          name: data?.name,
+          coverImage: this.getImageUrl(data.coverImgUrl),
+        };
+        this.filters.loading = false;
+      } catch (error) {
+        return this.$nuxt.error({ statusCode: 404, message: error.message })
+      }
+    },
   },
 };
 </script>

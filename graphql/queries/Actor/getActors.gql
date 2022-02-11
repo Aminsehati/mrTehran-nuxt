@@ -1,0 +1,9 @@
+query getActors {
+  getActors {
+    _id
+    name
+    imgUrl
+    coverImgUrl
+    Followers
+  }
+}
