@@ -7,7 +7,7 @@
             {{ navbar.name }}
           </nuxt-link>
         </li>
-        <li class="navbar_item text-light">
+        <li class="navbar_item text-light" @click="$emit('onSearch')">
           <i class="fa-solid fa-magnifying-glass"></i>
           Search
         </li>

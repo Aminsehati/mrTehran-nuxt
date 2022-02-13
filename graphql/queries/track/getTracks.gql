@@ -1,0 +1,12 @@
+query getTracks($actorID:ID) {
+  getTracks(input:{
+    actorID:$actorID
+  }) {
+    _id
+    actorID
+    imgUrl
+    audioUrl
+    actorName
+    trackName
+  }
+}

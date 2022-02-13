@@ -29,6 +29,7 @@
 
 <script>
 import getActor from "../../../graphql/queries/Actor/getActor.gql";
+import getTracks from "../../../graphql/queries/track/getTracks.gql";
 import "./style.scss";
 export default {
   data() {
@@ -46,6 +47,7 @@ export default {
   },
   mounted() {
     this.getArtist();
+    this.getListTracks();
   },
   methods: {
     async getArtist() {
@@ -66,8 +68,21 @@ export default {
         };
         this.filters.loading = false;
       } catch (error) {
-        return this.$nuxt.error({ statusCode: 404, message: error.message })
+        return this.$nuxt.error({ statusCode: 404, message: error.message });
       }
+    },
+    async getListTracks() {
+      const { id } = this.$route.params;
+      try {
+        const httpResponse = await this.$apollo.query({
+          query: getTracks,
+          variables:{
+            actorID:id
+          }
+        });
+        const data = httpResponse.data.getTracks;
+        this.listTracks = data;
+      } catch (error) {}
     },
   },
 };

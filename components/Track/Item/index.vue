@@ -1,27 +1,29 @@
 <template>
   <div class="track-item">
-    <nuxt-link :to="`/track/${trackInfo.id}`">
-      <div class="image">
-        <img :src="trackInfo.image" />
-      </div>
-      <div class="content pl-15">
-          <h2 class="text-white">
-              {{
-                  trackInfo.nameTrack
-              }}
-          </h2>
-          <p class="text-light">
-              {{
-                  trackInfo.Actor
-              }}
-          </p>
-      </div>
-    </nuxt-link>
+    <div class="image">
+      <nuxt-link :to="`/track/${trackInfo._id}`">
+        <img :src="getImageUrl(trackInfo.imgUrl)" />
+      </nuxt-link>
+    </div>
+    <div class="content px-15">
+      <nuxt-link :to="`/track/${trackInfo._id}`" class="block trackName">
+        {{ trackInfo.trackName }}
+      </nuxt-link>
+      <nuxt-link :to="`/track/${trackInfo._id}`" class="text-light block">
+        {{ trackInfo.actorName }}
+      </nuxt-link>
+    </div>
+    <div class="play-track">
+      <span class="play-track-icon" @click="playTrack(trackInfo)">
+        <i class="fa-solid fa-play"></i>
+      </span>
+    </div>
   </div>
 </template>
 
 <script>
 import "./style.scss";
+import { mapGetters } from "vuex";
 export default {
   props: {
     trackInfo: {
@@ -29,6 +31,19 @@ export default {
       default: () => {
         return {};
       },
+    },
+  },
+  computed: {
+    ...mapGetters({
+      audioPlayer: "player/getAudio",
+    }),
+  },
+  methods: {
+    playTrack(track) {
+      this.$store.commit("player/setImageUrl", track);
+      this.$store.commit('player/setChangeStatusPlaying',true);
+      this.audioPlayer.src = this.getAudioUrl(track.audioUrl);
+      this.audioPlayer.play()
     },
   },
 };

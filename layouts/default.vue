@@ -1,15 +1,23 @@
 <template>
   <div>
     <Header />
-    <Navbar />
+    <Navbar @onSearch="showSidebarSearch = !showSidebarSearch" />
     <nuxt />
     <Banner />
     <Footer />
+    <Search :show="showSidebarSearch" />
+    <Player/>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      showSidebarSearch: false,
+    };
+  },
+};
 </script>
 
 <style>

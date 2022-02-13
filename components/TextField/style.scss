@@ -1,0 +1,23 @@
+.form-group {
+  position: relative;
+  .form-control {
+    width: 100%;
+    display: block;
+    min-height: 50px;
+    outline: none;
+    color: #fff;
+    background: transparent;
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    &.has-search {
+      padding: 0 25px;
+    }
+  }
+  .seach-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+  }
+}
