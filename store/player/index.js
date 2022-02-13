@@ -6,8 +6,8 @@ export const state = () => ({
     audioDuration: 0,
     audioCurrentTime: 0,
     imageUrl: "",
-    audioUrl:"",
     playing: false,
+    trackName:"",
   }
 })
 export const mutations = {
@@ -15,9 +15,7 @@ export const mutations = {
     state.audio = item;
   },
   setAudio(state, item) {
-    console.log(item);
     state.audio = item
-    // state.audio.src = "https://mr-tehran-express.vercel.app/uploads/audio/Hichkas_Ye-Mosht-Sarbaz.mp3";
   },
   setChangeStatusPlaying(state, falg) {
     state.ActivePlayer.playing = falg;
@@ -31,6 +29,9 @@ export const mutations = {
   setImageUrl(state,item){
       state.ActivePlayer.imageUrl = item.imgUrl
   },
+  setTrackName(state,item){
+    state.ActivePlayer.trackName = item.trackName
+  }
 }
 export const getters = {
   getAudio(state) {

@@ -5,7 +5,9 @@
         <img :src="getImageUrl(ActivePlayer.imageUrl)" />
       </div>
       <div class="detail-track pl-15">
-        <p>Q69</p>
+        <p>
+          {{ ActivePlayer.trackName }}
+        </p>
         <p class="text-light">Ho3ein</p>
       </div>
       <span class="volume-player">
@@ -16,7 +18,9 @@
       </span>
     </div>
     <div class="player-section-control">
-      <span class="player-time-duration pl-20"> 00:00 </span>
+      <span class="player-time-duration pl-20">
+        {{ ActivePlayer.audioDuration | convertTimeAudio }}
+      </span>
       <div class="prev-player text-center flex-grow">
         <i class="fa-solid fa-backward-step text-18"></i>
       </div>
@@ -31,9 +35,16 @@
       <div class="next-player text-center flex-grow">
         <i class="fa-solid fa-backward-step text-18"></i>
       </div>
+      <span class="pr-20">
+        {{ ActivePlayer.audioCurrentTime | convertTimeAudio }}
+      </span>
     </div>
-    <div class="player-progress" >
-      <div class="bar-progress-player" :style="progressPlayerAudio"  @resize="resize($event)"></div>
+    <div class="player-progress">
+      <div
+        class="bar-progress-player"
+        :style="progressPlayerAudio"
+        @resize="resize($event)"
+      ></div>
     </div>
   </div>
 </template>
@@ -65,6 +76,11 @@ export default {
             100 +
           "%",
       };
+    },
+  },
+  filters: {
+    convertTimeAudio(value) {
+      return new Date(value * 1000).toISOString().substr(11, 8).slice(3);
     },
   },
   methods: {
