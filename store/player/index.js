@@ -7,7 +7,8 @@ export const state = () => ({
     audioCurrentTime: 0,
     imageUrl: "",
     playing: false,
-    trackName:"",
+    trackName: "",
+    ActorName: "",
   }
 })
 export const mutations = {
@@ -26,11 +27,14 @@ export const mutations = {
   setAudioCurrentTime(state, item) {
     state.ActivePlayer.audioCurrentTime = item;
   },
-  setImageUrl(state,item){
-      state.ActivePlayer.imageUrl = item.imgUrl
+  setImageUrl(state, item) {
+    state.ActivePlayer.imageUrl = item.imgUrl
   },
-  setTrackName(state,item){
+  setTrackName(state, item) {
     state.ActivePlayer.trackName = item.trackName
+  },
+  setActorName(state, item) {
+    state.ActivePlayer.ActorName = item.actorName
   }
 }
 export const getters = {

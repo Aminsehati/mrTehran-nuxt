@@ -42,6 +42,7 @@ import "./style.scss";
 import getPlayList from "@/graphql/queries/playList/getPlayLists.gql";
 import getActors from "@/graphql/queries/Actor/getActors";
 export default {
+  layout:"main",
   data() {
     return {
       listPlaylists: [],

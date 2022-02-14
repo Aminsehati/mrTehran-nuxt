@@ -24,6 +24,7 @@
 <script>
 import getPlayList from "@/graphql/queries/playList/getPlayLists.gql";
 export default {
+  layout: "main",
   data() {
     return {
       playListsItems: [],

@@ -42,7 +42,8 @@ export default {
     playTrack(track) {
       this.$store.commit("player/setImageUrl", track);
       this.$store.commit('player/setChangeStatusPlaying',true);
-      this.$store.commit('player/setTrackName',track)
+      this.$store.commit('player/setTrackName',track);
+      this.$store.commit('player/setActorName',track)
       this.audioPlayer.src = this.getAudioUrl(track.audioUrl);
       this.audioPlayer.play()
     },

@@ -32,6 +32,7 @@ import getActor from "../../../graphql/queries/Actor/getActor.gql";
 import getTracks from "../../../graphql/queries/track/getTracks.gql";
 import "./style.scss";
 export default {
+  layout: "main",
   data() {
     return {
       ArtistInfo: {
@@ -76,9 +77,9 @@ export default {
       try {
         const httpResponse = await this.$apollo.query({
           query: getTracks,
-          variables:{
-            actorID:id
-          }
+          variables: {
+            actorID: id,
+          },
         });
         const data = httpResponse.data.getTracks;
         this.listTracks = data;

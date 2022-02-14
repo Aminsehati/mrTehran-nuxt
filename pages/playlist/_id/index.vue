@@ -10,6 +10,7 @@
 import "./style.scss";
 import getPlayList from "@/graphql/queries/playList/getPlayList.gql";
 export default {
+  layout:"main",
   data() {
     return {
       playListInfo: {

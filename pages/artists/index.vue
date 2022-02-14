@@ -28,6 +28,7 @@
 import "./style.scss";
 import getActors from "../../graphql/queries/Actor/getActors";
 export default {
+  layout:"main",
   data() {
     return {
       listArtists: [],

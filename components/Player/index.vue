@@ -8,7 +8,11 @@
         <p>
           {{ ActivePlayer.trackName }}
         </p>
-        <p class="text-light">Ho3ein</p>
+        <p class="text-light">
+          {{
+            ActivePlayer.ActorName
+          }}
+        </p>
       </div>
       <span class="volume-player">
         <i class="fa-solid fa-volume-high"></i>
@@ -40,11 +44,7 @@
       </span>
     </div>
     <div class="player-progress">
-      <div
-        class="bar-progress-player"
-        :style="progressPlayerAudio"
-        @resize="resize($event)"
-      ></div>
+      <div class="bar-progress-player" :style="progressPlayerAudio"></div>
     </div>
   </div>
 </template>
@@ -80,7 +80,9 @@ export default {
   },
   filters: {
     convertTimeAudio(value) {
-      return new Date(value * 1000).toISOString().substr(11, 8).slice(3);
+      if (value) {
+        return new Date(value * 1000).toISOString().substr(11, 8).slice(3);
+      }
     },
   },
   methods: {
@@ -96,6 +98,9 @@ export default {
       this.player = new Audio();
       this.$store.commit("player/setAudio", new Audio());
       this.audioPlayer.loop = true;
+      this.audioPlayer.addEventListener("progress", () => {
+        
+      });
       this.audioPlayer.addEventListener("timeupdate", () => {
         this.$store.commit(
           "player/setAudioDuration",
@@ -106,9 +111,6 @@ export default {
           parseFloat(this.audioPlayer.currentTime)
         );
       });
-    },
-    resize(e) {
-      console.log(e);
     },
   },
 };
