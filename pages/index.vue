@@ -1,36 +1,39 @@
 <template>
   <div class="home-page">
     <div class="container-sm">
-      <div class="top-play-list mb-30">
-        <div class="mb-20">
-          <Title> Top Playlists </Title>
+      <Loading v-if="filters.loading" />
+      <div v-else>
+        <div class="top-play-list mb-30">
+          <div class="mb-20">
+            <Title> Top Playlists </Title>
+          </div>
+          <div class="grid grid-cols-3 gap-x-15 gap-y-20">
+            <PlayListItem
+              :playListInfo="playlist"
+              v-for="playlist in listPlaylists"
+              :key="playlist.id"
+            />
+          </div>
         </div>
-        <div class="grid grid-cols-3 gap-x-15 gap-y-20">
-          <PlayListItem
-            :playListInfo="playlist"
-            v-for="playlist in listPlaylists"
-            :key="playlist.id"
-          />
-        </div>
-      </div>
-      <div class="top-artist-list">
-        <div class="mb-20">
-          <Title> Top Artists </Title>
-        </div>
-        <div
-          class="
-            artist-wrapper
-            grid
-            xl:grid-cols-3
-            sm:grid-cols-2
-            gap-x-20 gap-y-20
-          "
-        >
-          <ArtistItem
-            :ArtistInfo="artist"
-            v-for="artist in listActors"
-            :key="artist.id"
-          />
+        <div class="top-artist-list">
+          <div class="mb-20">
+            <Title> Top Artists </Title>
+          </div>
+          <div
+            class="
+              artist-wrapper
+              grid
+              xl:grid-cols-3
+              sm:grid-cols-2
+              gap-x-20 gap-y-20
+            "
+          >
+            <ArtistItem
+              :ArtistInfo="artist"
+              v-for="artist in listActors"
+              :key="artist.id"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -42,11 +45,14 @@ import "./style.scss";
 import getPlayList from "@/graphql/queries/playList/getPlayLists.gql";
 import getActors from "@/graphql/queries/Actor/getActors";
 export default {
-  layout:"main",
+  layout: "main",
   data() {
     return {
       listPlaylists: [],
       listActors: [],
+      filters: {
+        loading: false,
+      },
     };
   },
   mounted() {
@@ -55,21 +61,25 @@ export default {
   },
   methods: {
     async getlistPlaylist() {
+      this.filters.loading = true;
       try {
         const httpResponse = await this.$apollo.query({
           query: getPlayList,
         });
         const data = httpResponse.data.getPlayLists;
         this.listPlaylists = data;
+        this.filters.loading = false;
       } catch (error) {}
     },
     async getListActos() {
+      this.filters.loading = true ;
       try {
         const httpResponse = await this.$apollo.query({
           query: getActors,
         });
         const data = httpResponse.data.getActors;
         this.listActors = data;
+        this.filters.loading = false ;
       } catch (error) {}
     },
   },

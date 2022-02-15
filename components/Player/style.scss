@@ -8,6 +8,7 @@
   z-index: 99999;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   .player-seection-track {
     padding-left: 15px;
     display: flex;
@@ -90,5 +91,38 @@
       height: 70px;
       background: #ffffff1a;
     }
+  }
+}
+@media screen and (max-width:1272px){
+  .player .player-section-control {
+    width: 30%;
+  }
+}
+@media screen and (max-width:992px){
+  .player{
+    height: auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  .player-progress{
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    order: -1;
+    margin-bottom: 15px;
+    min-height: auto !important;
+    background: #ffffff1a;
+    min-height: 5px;
+    .bar-progress-player{
+      height: 5px !important;
+      background: #fff !important;
+    }
+  }
+  .player .player-seection-track{
+    width: 100%;
+    padding-right: 20px;
+    margin-bottom: 15px;
+  }
+  .player .player-section-control{
+    width: 100%;
   }
 }
