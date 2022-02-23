@@ -20,4 +20,16 @@
     transform: translateY(-50%);
     left: 0;
   }
+  .back {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    cursor: pointer;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
 }

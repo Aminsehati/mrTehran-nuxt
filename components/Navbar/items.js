@@ -2,26 +2,32 @@ const items = [{
     id: 1,
     name: "Home",
     path: "/",
+    className:"home"
   },
   {
     id: 2,
     name: "Browse",
-    path: "/",
+    path: "/browse",
+    className:"Browse"
   },
   {
     id: 3,
     name: "Artists",
     path: "/artists",
+    className:"artists"
+    
   },
   {
     id: 4,
     name: "Playlists",
     path: "/playlists",
+    className:"Playlists"
   },
   {
     id: 5,
     name: "Top Charts",
     path: "/",
+    className:"top-charts"
   },
 ]
 export default items

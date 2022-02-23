@@ -13,6 +13,7 @@
     <span v-if="search" class="seach-icon">
       <i class="fa-solid fa-magnifying-glass"></i>
     </span>
+    <slot name="back"/>
   </div>
 </template>
 

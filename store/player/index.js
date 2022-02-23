@@ -34,7 +34,17 @@ export const mutations = {
     state.ActivePlayer.trackName = item.trackName
   },
   setActorName(state, item) {
-    state.ActivePlayer.ActorName = item.actorName
+    let actorName = "";
+    item.actors.forEach((actor,index) => {
+      actorName += actor.name;
+      if(item.actors.length > index + 1 ){
+        actorName +=" & " 
+      }
+    })
+    state.ActivePlayer.ActorName = actorName
+  },
+  setIdPlayer(state,item){
+    state.ActivePlayer.idPlayer = item._id;
   }
 }
 export const getters = {

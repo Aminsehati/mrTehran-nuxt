@@ -1,0 +1,75 @@
+.cover-track {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border-radius: 0.5rem;
+  .cover-track-wrapper {
+    display: flex;
+    .image {
+      flex: 0 0 25%;
+      max-width: 25%;
+      .image__cover {
+        background: #3a3a3a;
+        position: relative;
+        padding-bottom: 96%;
+        border-radius: 0.5rem 0 0 0.5rem;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          position: absolute;
+          top: 0;
+          left: 0;
+          border-radius: 0.5rem 0 0 0.5rem;
+        }
+      }
+    }
+    .content {
+      flex: 1 1 0;
+      min-width: 0;
+      padding-top: 20px;
+      .trackName {
+        letter-spacing: 2px;
+      }
+      .actors {
+        p {
+          &:first-child {
+            margin-right: 6px;
+          }
+        }
+      }
+      .btn__group {
+        .btn__bookMark {
+          position: relative;
+          &::before {
+            content: "\f02e";
+            font-family: "Font Awesome 6 Free";
+            margin-right: 8px;
+          }
+        }
+        .btn__like {
+          position: relative;
+          &::before {
+            content: "\f004";
+            font-family: "Font Awesome 6 Free";
+            margin-right: 8px;
+          }
+        }
+        .btn__download {
+          position: relative;
+          &::before {
+            content: "\f004";
+            font-family: "Font Awesome 6 Free";
+            margin-right: 8px;
+          }
+        }
+        .btn__share {
+          position: relative;
+          &::before {
+            content: "\f1e0";
+            font-family: "Font Awesome 6 Free";
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+  }
+}

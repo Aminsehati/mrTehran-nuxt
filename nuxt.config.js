@@ -119,7 +119,7 @@ export default {
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint: 'https://mr-tehran-express.vercel.app/graphql',
+        httpEndpoint: 'http://localhost:3001/graphql',
       }
     }
   },

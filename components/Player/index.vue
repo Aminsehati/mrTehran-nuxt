@@ -9,9 +9,7 @@
           {{ ActivePlayer.trackName }}
         </p>
         <p class="text-light">
-          {{
-            ActivePlayer.ActorName
-          }}
+          {{ ActivePlayer.ActorName }}
         </p>
       </div>
       <span class="volume-player">
@@ -43,7 +41,7 @@
         {{ ActivePlayer.audioCurrentTime | convertTimeAudio }}
       </span>
     </div>
-    <div class="player-progress">
+    <div class="player-progress" @mousedown="mouseDown" ref="progress">
       <div class="bar-progress-player" :style="progressPlayerAudio"></div>
     </div>
   </div>
@@ -54,10 +52,7 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      player: "",
-      playing: false,
-      audioDuration: 0,
-      audioCurrentTime: 0,
+      chnageCurrentTime: false,
     };
   },
   mounted() {
@@ -95,22 +90,30 @@ export default {
       this.audioPlayer.pause();
     },
     init() {
-      this.player = new Audio();
       this.$store.commit("player/setAudio", new Audio());
       this.audioPlayer.loop = true;
-      this.audioPlayer.addEventListener("progress", () => {
-        
-      });
-      this.audioPlayer.addEventListener("timeupdate", () => {
+      this.audioPlayer.addEventListener("progress", () => {});
+      this.audioPlayer.addEventListener("canplay", () => {
+        console.log("can play");
         this.$store.commit(
           "player/setAudioDuration",
           parseFloat(this.audioPlayer.duration)
         );
-        this.$store.commit(
-          "player/setAudioCurrentTime",
-          parseFloat(this.audioPlayer.currentTime)
-        );
       });
+      if (!this.chnageCurrentTime) {
+        this.audioPlayer.addEventListener("timeupdate", () => {
+          this.$store.commit(
+            "player/setAudioCurrentTime",
+            parseFloat(this.audioPlayer.currentTime)
+          );
+        });
+      }
+    },
+    mouseDown(e) {
+      const progress = this.$refs.progress;
+      this.chnageCurrentTime = !this.chnageCurrentTime;
+      const audioCurrentTime =
+        this.ActivePlayer.audioDuration * (e.offsetX / progress.offsetWidth);
     },
   },
 };

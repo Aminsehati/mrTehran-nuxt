@@ -1,11 +1,10 @@
-query getTracks($actorID:ID) {
-  getTracks(input:{
-    actorID:$actorID
-  }) {
-     _id
+query getTrack($id:ID!) {
+  getTrack(id:$id) {
+    _id
     imgUrl
     audioUrl
     trackName
+    view
     actors {
       _id
       name
@@ -13,7 +12,6 @@ query getTracks($actorID:ID) {
       coverImgUrl
       Followers
     }
-    view
     createdAt
     updatedAt
   }

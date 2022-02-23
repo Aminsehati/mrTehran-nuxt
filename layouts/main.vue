@@ -5,7 +5,10 @@
     <nuxt />
     <Banner />
     <Footer />
-    <Search :show="showSidebarSearch" />
+    <Search
+      :show="showSidebarSearch"
+      @close="showSidebarSearch = !showSidebarSearch"
+    />
     <Player />
   </div>
 </template>

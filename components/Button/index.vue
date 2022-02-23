@@ -12,6 +12,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    secondary:{
+      type:Boolean,
+      default:false,
+    },
     small:{
       type:Boolean,
       default:false,
@@ -23,6 +27,7 @@ export default {
         "btn",
         {
           "btn-primary": this.primary,
+          'btn-secondary':this.secondary,
           'btn-small':this.small
         },
       ];

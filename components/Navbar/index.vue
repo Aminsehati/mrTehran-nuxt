@@ -3,11 +3,14 @@
     <div class="container-sm">
       <ul class="list_navbar flex align-center">
         <li v-for="navbar in navbarItems" :key="navbar.id" class="navbar_item">
-          <nuxt-link :to="navbar.path" class="text-13 text-light text-400">
+          <nuxt-link
+            :to="navbar.path"
+            :class="['text-13 text-light text-400', navbar.className]"
+          >
             {{ navbar.name }}
           </nuxt-link>
         </li>
-        <li class="navbar_item text-light" @click="$emit('onSearch')">
+        <li :class="['navbar_item text-light']" @click="$emit('onSearch')">
           <i class="fa-solid fa-magnifying-glass"></i>
           Search
         </li>
@@ -18,11 +21,11 @@
 
 <script>
 import "./style.scss";
-import items from './items'
+import items from "./items";
 export default {
   data() {
     return {
-      navbarItems:items
+      navbarItems: items,
     };
   },
 };

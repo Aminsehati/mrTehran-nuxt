@@ -8,7 +8,11 @@
     ]"
   >
     <div class="px-15 search_text-field">
-      <TextField placeholder="Search....." search />
+      <TextField placeholder="Search....." search >
+        <span class="back" slot="back" @click="$emit('close')">
+          <i class="fa-solid fa-xmark"></i>
+        </span>
+      </TextField>
     </div>
   </div>
 </template>
