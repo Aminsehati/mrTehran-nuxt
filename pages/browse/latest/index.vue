@@ -1,10 +1,10 @@
 <template>
-  <div class="browse_page">
+  <div class="browse_latest_page">
     <Loading v-show="filters.loading" />
     <div class="container-sm" v-show="!filters.loading">
       <Tabs :tabs="tabs" />
       <div class="title mb-20">
-        <Title> Featured </Title>
+        <Title> Latest </Title>
       </div>
       <div class="grid xl:grid-cols-3 sm:grid-cols-2 gap-x-20 gap-y-20 mb-25">
         <TrackItem :trackInfo="track" v-for="track in tracks" :key="track.id" />
@@ -75,6 +75,9 @@ export default {
             pagination: {
               limit: this.filters.limit,
               skip: this.filters.skip,
+            },
+            sort: {
+              updatedAt: -1,
             },
           },
         });

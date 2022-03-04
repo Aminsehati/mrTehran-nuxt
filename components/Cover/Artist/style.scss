@@ -12,7 +12,6 @@
     padding-bottom: 15px;
     z-index: 2;
     background: rgba(255, 255, 255, 0.07);
-    background: red;
     &::before {
       content: "";
       position: absolute;
@@ -39,13 +38,14 @@
       align-items: center;
       column-gap: 10px;
       row-gap: 15px;
+      flex-wrap: wrap;
       .btn_item {
         border: 1px solid rgba(255, 255, 255, 0.5);
         padding: 0.34rem 1.9rem;
         border-radius: 50rem;
         font-size: 13px;
         transition: all 400ms ease;
-        &:hover{
+        &:hover {
           background: #fff;
           color: #202020;
           transition: all 400ms ease;

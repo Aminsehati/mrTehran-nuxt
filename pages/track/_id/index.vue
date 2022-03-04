@@ -13,6 +13,7 @@
 
 <script>
 import getTrack from "@/graphql/queries/track/getTrack.gql";
+import viewTrack from "@/graphql/mutations/track/viewTrack.gql";
 import "./style.scss";
 export default {
   layout: "main",
@@ -31,8 +32,9 @@ export default {
       },
     };
   },
-  mounted() {
-    this.getTrackItem();
+  async fetch() {
+    await this.getTrackItem();
+    await this.viewTrack();
   },
   methods: {
     async getTrackItem() {
@@ -57,6 +59,20 @@ export default {
         };
         this.filters.loading = false;
       } catch (error) {}
+    },
+    async viewTrack() {
+      try {
+        const { id } = this.$route.params;
+        const httpResponse = await this.$apollo.mutate({
+          mutation: viewTrack,
+          variables: {
+            trackID: id,
+          },
+        });
+        console.log(httpResponse,"httpResponse");
+      } catch (error) {
+        ///
+      }
     },
   },
 };

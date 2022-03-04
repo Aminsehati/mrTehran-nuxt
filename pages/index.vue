@@ -7,7 +7,7 @@
           <div class="mb-20">
             <Title> Top Playlists </Title>
           </div>
-          <div class="grid grid-cols-3 gap-x-15 gap-y-20">
+          <div class="grid xl:grid-cols-3 sm:grid-cols-2 gap-x-20 gap-y-20">
             <PlayListItem
               :playListInfo="playlist"
               v-for="playlist in listPlaylists"
@@ -55,9 +55,9 @@ export default {
       },
     };
   },
-  mounted() {
-    this.getlistPlaylist();
-    this.getListActos();
+  async fetch() {
+    await this.getlistPlaylist();
+    await this.getListActos();
   },
   methods: {
     async getlistPlaylist() {
@@ -72,15 +72,17 @@ export default {
       } catch (error) {}
     },
     async getListActos() {
-      this.filters.loading = true ;
+      this.filters.loading = true;
       try {
         const httpResponse = await this.$apollo.query({
           query: getActors,
         });
         const data = httpResponse.data.getActors;
         this.listActors = data;
-        this.filters.loading = false ;
-      } catch (error) {}
+        this.filters.loading = false;
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };

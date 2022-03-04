@@ -17,7 +17,9 @@
     "core-js": "^3.15.1",
     "jalali-moment": "^3.3.11",
     "nuxt": "^2.15.7",
-    "vercel": "^23.1.2"
+    "vercel": "^23.1.2",
+    "vue-pagination-2": "^3.0.91",
+    "vuejs-paginate": "^2.1.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.14.7",

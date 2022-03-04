@@ -30,6 +30,9 @@ export default {
       playListsItems: [],
     };
   },
+  async fetch() {
+    await this.getPlayListItem();
+  },
   methods: {
     async getPlayListItem() {
       try {
@@ -38,12 +41,8 @@ export default {
         });
         const data = httpResponse.data.getPlayLists;
         this.playListsItems = data;
-        console.log(data);
       } catch (error) {}
     },
-  },
-  mounted() {
-    this.getPlayListItem();
   },
 };
 </script>

@@ -37,8 +37,8 @@ export default {
       },
     };
   },
-  mounted() {
-    this.getlistArtist();
+  async fetch() {
+    await this.getlistArtist();
   },
   methods: {
     async getlistArtist() {

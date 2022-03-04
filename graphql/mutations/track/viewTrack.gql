@@ -1,0 +1,21 @@
+mutation viewTrack($trackID:ID!) {
+  viewTrack(input:{
+    trackID: $trackID
+  }) {
+    _id
+    imgUrl
+    audioUrl
+    trackName
+    actors {
+      _id
+      name
+      imgUrl
+      coverImgUrl
+      Followers
+    }
+    createdAt
+    updatedAt
+    view
+    like
+  }
+}

@@ -41,7 +41,7 @@
         {{ ActivePlayer.audioCurrentTime | convertTimeAudio }}
       </span>
     </div>
-    <div class="player-progress" @mousedown="mouseDown" ref="progress">
+    <div class="player-progress" ref="progress">
       <div class="bar-progress-player" :style="progressPlayerAudio"></div>
     </div>
   </div>
@@ -109,12 +109,10 @@ export default {
         });
       }
     },
-    mouseDown(e) {
-      const progress = this.$refs.progress;
-      this.chnageCurrentTime = !this.chnageCurrentTime;
-      const audioCurrentTime =
-        this.ActivePlayer.audioDuration * (e.offsetX / progress.offsetWidth);
-    },
   },
+  destroyed(){
+    this.$store.commit("player/setChangeStatusPlaying", false);
+    this.audioPlayer.pause();
+  }
 };
 </script>

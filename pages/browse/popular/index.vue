@@ -1,10 +1,10 @@
 <template>
-  <div class="browse_page">
+  <div class="browse_popular_page">
     <Loading v-show="filters.loading" />
-    <div class="container-sm" v-show="!filters.loading">
+    <div class="container-sm" v-show="!filters.loadin">
       <Tabs :tabs="tabs" />
       <div class="title mb-20">
-        <Title> Featured </Title>
+        <Title> Popular </Title>
       </div>
       <div class="grid xl:grid-cols-3 sm:grid-cols-2 gap-x-20 gap-y-20 mb-25">
         <TrackItem :trackInfo="track" v-for="track in tracks" :key="track.id" />
@@ -69,6 +69,7 @@ export default {
   methods: {
     async getTrackItems() {
       try {
+        this.filters.loading = true;
         const httpResponse = await this.$apollo.query({
           query: getTracks,
           variables: {
@@ -76,12 +77,18 @@ export default {
               limit: this.filters.limit,
               skip: this.filters.skip,
             },
+            sort: {
+              view: -1,
+            },
           },
         });
         const data = httpResponse.data.getTracks;
+        this.filters.loading = false;
         this.tracks = data;
       } catch (error) {
         ////
+      } finally {
+        this.filters.loading = false;
       }
     },
     async getTracksCount() {
@@ -102,6 +109,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

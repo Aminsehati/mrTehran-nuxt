@@ -20,7 +20,7 @@ export default {
       },
     };
   },
-  mounted() {
+  async fetch() {
     this.getPlayList();
   },
   methods: {

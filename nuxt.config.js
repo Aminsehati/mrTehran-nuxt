@@ -103,6 +103,9 @@ export default {
   plugins: [{
     src: '@/plugins/mixins',
     ssr: true,
+  }, {
+    src: '@/plugins/pagination',
+    ssr: false,
   }],
   components: true,
   buildModules: [

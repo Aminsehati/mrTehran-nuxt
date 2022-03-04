@@ -46,9 +46,9 @@ export default {
       listTracks: [],
     };
   },
-  mounted() {
-    this.getArtist();
-    this.getListTracks();
+  async fetch() {
+    await this.getArtist();
+    await this.getListTracks();
   },
   methods: {
     async getArtist() {

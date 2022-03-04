@@ -1,0 +1,3 @@
+query getTracksCount {
+  getTracksCount
+}
