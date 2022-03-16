@@ -5,8 +5,9 @@
         <li v-for="navbar in navbarItems" :key="navbar.id" class="navbar_item">
           <nuxt-link
             :to="navbar.path"
-            :class="['text-13 text-light text-400', navbar.className]"
+            :class="['text-13 text-light text-400']"
           >
+          <i :class="navbar.className"></i>
             {{ navbar.name }}
           </nuxt-link>
         </li>

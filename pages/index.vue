@@ -4,8 +4,12 @@
       <Loading v-if="filters.loading" />
       <div v-else>
         <div class="top-play-list mb-30">
-          <div class="mb-20">
+          <div class="mb-20 flex justify-between items-center">
             <Title> Top Playlists </Title>
+            <nuxt-link to="/artists" class="text-white">
+              See All
+              <i class="fa-solid fa-chevron-right ml-10 text-12"></i>
+            </nuxt-link>
           </div>
           <div class="grid xl:grid-cols-3 sm:grid-cols-2 gap-x-20 gap-y-20">
             <PlayListItem
@@ -16,8 +20,12 @@
           </div>
         </div>
         <div class="top-artist-list">
-          <div class="mb-20">
+          <div class="mb-20 flex justify-between items-center">
             <Title> Top Artists </Title>
+            <nuxt-link to="/artists" class="text-white">
+              See All
+              <i class="fa-solid fa-chevron-right ml-10 text-12"></i>
+            </nuxt-link>
           </div>
           <div
             class="

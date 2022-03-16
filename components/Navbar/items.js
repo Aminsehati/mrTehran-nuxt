@@ -27,7 +27,7 @@ const items = [{
     id: 5,
     name: "Top Charts",
     path: "/",
-    className:"top-charts"
+    className:"fa-solid fa-chart-pie"
   },
 ]
 export default items

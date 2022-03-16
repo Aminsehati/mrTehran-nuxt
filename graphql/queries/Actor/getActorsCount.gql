@@ -1,0 +1,3 @@
+query getActorsCount {
+    getActorsCount
+}
