@@ -31,7 +31,12 @@ export default {
   },
   methods: {
     Followers(count) {
-      return `${count / 1000} k`;
+      let label = count > 1000 ? "k" : "";
+      if (count > 1000) {
+        return `${Number(count) / 1000}${label}`;
+      } else {
+        return `${Number(count)}${label}`;
+      }
     },
   },
 };

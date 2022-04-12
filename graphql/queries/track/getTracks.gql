@@ -1,21 +1,20 @@
-query getTracks($actorID:ID , $pagination:Pagination , $sort:getTracksSort) {
-  getTracks(input:{
-    actorID:$actorID
-  },
-  pagination:$pagination , sort:$sort) {
-     _id
+query getTracks($pagination:Pagination ,$sort:sortTrack , $filter:sortFilter ) {
+  getTracks(pagination:$pagination,filter:$filter , sort:$sort) {
+    _id
     imgUrl
     audioUrl
     trackName
-    actors {
+    view
+    like
+    artists {
       _id
       name
       imgUrl
       coverImgUrl
       Followers
+      createdAt
+      updatedAt
     }
-    view
-    like
     createdAt
     updatedAt
   }

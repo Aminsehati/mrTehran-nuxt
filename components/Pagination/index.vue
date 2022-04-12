@@ -1,5 +1,5 @@
 <template>
-  <div class="pagination_wrapper" >
+  <div class="pagination_wrapper" v-if="getPageCount > 1">
     <paginate
       :page-count="getPageCount"
       :prev-text="''"

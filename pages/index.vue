@@ -51,7 +51,7 @@
 <script>
 import "./style.scss";
 import getPlayList from "@/graphql/queries/playList/getPlayLists.gql";
-import getActors from "@/graphql/queries/Actor/getActors";
+import getArtists from "@/graphql/queries/artist/getArtists.gql";
 export default {
   layout: "main",
   data() {
@@ -77,19 +77,31 @@ export default {
         const data = httpResponse.data.getPlayLists;
         this.listPlaylists = data;
         this.filters.loading = false;
-      } catch (error) {}
+      } catch (error) {
+        ///
+      } finally {
+        this.filters.loading = false;
+      }
     },
     async getListActos() {
       this.filters.loading = true;
       try {
         const httpResponse = await this.$apollo.query({
-          query: getActors,
+          query: getArtists,
+          variables: {
+            pagination: {
+              limit: 12,
+              skip: 1,
+            },
+          },
         });
-        const data = httpResponse.data.getActors;
+        const data = httpResponse.data.getArtists;
         this.listActors = data;
         this.filters.loading = false;
       } catch (error) {
         console.log(error);
+      } finally {
+        this.filters.loading = false;
       }
     },
   },

@@ -1,0 +1,11 @@
+query getArtists($pagination:Pagination) {
+  getArtists(pagination:$pagination) {
+    _id
+    name
+    imgUrl
+    coverImgUrl
+    Followers
+    createdAt
+    updatedAt
+  }
+}

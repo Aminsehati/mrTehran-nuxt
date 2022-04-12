@@ -38,7 +38,7 @@ export default {
       playListsItems: [],
       filters: {
         loading: false,
-        limit: 1,
+        limit: 20,
         skip: 1,
         tottalCount: 0,
       },

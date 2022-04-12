@@ -1,9 +1,0 @@
-query getActors($pagination:Pagination) {
-  getActors(pagination:$pagination) {
-    _id
-    name
-    imgUrl
-    coverImgUrl
-    Followers
-  }
-}

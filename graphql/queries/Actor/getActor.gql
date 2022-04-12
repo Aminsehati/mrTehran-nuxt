@@ -1,9 +1,0 @@
-query getActor($id:ID!) {
-  getActor(id:$id) {
-    _id
-    name
-    imgUrl
-    coverImgUrl
-    Followers
-  }
-}

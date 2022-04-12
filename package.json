@@ -1,9 +1,9 @@
 {
-  "name": "MrTehran-front",
+  "name": "mrtehran-front",
   "version": "1.0.0",
   "private": true,
-  "scripts": {
-    "dev": "nuxt",
+  "scripts": { 
+    "dev": "nuxt -p 8080",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",

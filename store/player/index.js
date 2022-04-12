@@ -1,14 +1,13 @@
 export const state = () => ({
   audio: "",
   ActivePlayer: {
-    player: "",
     idPlayer: "",
     audioDuration: 0,
     audioCurrentTime: 0,
-    imageUrl: "",
+    imgUrl: "",
     playing: false,
     trackName: "",
-    ActorName: "",
+    artists: []
   }
 })
 export const mutations = {
@@ -35,16 +34,26 @@ export const mutations = {
   },
   setActorName(state, item) {
     let actorName = "";
-    item.actors.forEach((actor,index) => {
+    item.actors.forEach((actor, index) => {
       actorName += actor.name;
-      if(item.actors.length > index + 1 ){
-        actorName +=" & " 
+      if (item.actors.length > index + 1) {
+        actorName += " & "
       }
     })
     state.ActivePlayer.ActorName = actorName
   },
-  setIdPlayer(state,item){
+  setIdPlayer(state, item) {
     state.ActivePlayer.idPlayer = item._id;
+  },
+  setActivePlayer(state, item) {
+    state.ActivePlayer = {
+      ...state.ActivePlayer,
+      artists: item?.artists || [],
+      trackName: item?.trackName || "",
+      imgUrl: item?.imgUrl || "",
+      idPlayer: item?._id || ""
+    }
+    console.log(item, 'item');
   }
 }
 export const getters = {

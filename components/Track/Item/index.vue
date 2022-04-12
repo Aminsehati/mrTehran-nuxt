@@ -67,10 +67,7 @@ export default {
   methods: {
     playTrack(track) {
       if (track._id !== this.activePlayer.idPlayer) {
-        this.$store.commit("player/setImageUrl", track);
-        this.$store.commit("player/setTrackName", track);
-        this.$store.commit("player/setActorName", track);
-        this.$store.commit("player/setIdPlayer", track);
+        this.$store.commit("player/setActivePlayer",track);
         this.audioPlayer.src = this.getAudioUrl(track.audioUrl);
       }
       this.$store.commit("player/setChangeStatusPlaying", true);

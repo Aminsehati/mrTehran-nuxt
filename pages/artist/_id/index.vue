@@ -3,7 +3,7 @@
     <div class="container-sm">
       <Loading v-if="filters.loading" />
       <div v-else>
-        <CoverArtist :ArtistInfo="ArtistInfo" />
+        <CoverArtist :ArtistInfo="ArtistInfo" @follow="followArtist" />
         <div class="title_ mb-30">
           <Title> All Tracks </Title>
         </div>
@@ -28,8 +28,9 @@
 </template>
 
 <script>
-import getActor from "../../../graphql/queries/Actor/getActor.gql";
-import getTracks from "../../../graphql/queries/track/getTracks.gql";
+import getArtist from "@/graphql/queries/artist/getArtist.gql";
+import getTracks from "@/graphql/queries/track/getTracks.gql";
+import FollowArtist from "@/graphql/mutations/artist/FollowArtist.gql";
 import "./style.scss";
 export default {
   layout: "main",
@@ -56,20 +57,24 @@ export default {
       try {
         const { id } = this.$route.params;
         const httpResponse = await this.$apollo.query({
-          query: getActor,
+          query: getArtist,
           variables: {
             id,
           },
         });
-        const data = httpResponse.data.getActor;
+        const data = httpResponse.data.getArtist;
         this.ArtistInfo = {
           ...this.ArtistInfo,
           name: data?.name,
           coverImage: this.getImageUrl(data.coverImgUrl),
+          countFollowers: data?.Followers || 0,
         };
         this.filters.loading = false;
       } catch (error) {
-        return this.$nuxt.error({ statusCode: 404, message: error.message });
+        // return this.$nuxt.error({ statusCode: 404, message: error.message });
+        console.log(error);
+      } finally {
+        this.filters.loading = false;
       }
     },
     async getListTracks() {
@@ -78,12 +83,35 @@ export default {
         const httpResponse = await this.$apollo.query({
           query: getTracks,
           variables: {
-            actorID: id,
+            filter: {
+              artistID: id,
+            },
           },
         });
         const data = httpResponse.data.getTracks;
         this.listTracks = data;
-      } catch (error) {}
+      } catch (error) {
+        console.log("error", error);
+      }
+    },
+    async followArtist() {
+      try {
+        this.filters.loading = true;
+        const { id } = this.$route.params;
+        const httpResponse = await this.$apollo.mutate({
+          mutation: FollowArtist,
+          variables: {
+            id,
+          },
+        });
+        const data = httpResponse.data.FollowArtist;
+        this.ArtistInfo.countFollowers = data.Followers;
+        this.filters.loading = false;
+      } catch (error) {
+        ////
+      } finally {
+        this.filters.loading = false;
+      }
     },
   },
 };

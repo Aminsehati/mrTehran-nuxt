@@ -2,8 +2,8 @@ import moment from "jalali-moment"
 const mixins = {
   data() {
     return {
-      baseImageUrl: "http://localhost:3001/uploads/images",
-      baseAudioUrl: "http://localhost:3001/uploads/audio"
+      baseImageUrl: "http://localhost:3000/public/images",
+      baseAudioUrl: "http://localhost:3000/public/audio"
     }
   },
   methods: {

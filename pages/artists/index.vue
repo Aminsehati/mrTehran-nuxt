@@ -32,8 +32,8 @@
 
 <script>
 import "./style.scss";
-import getActors from "../../graphql/queries/Actor/getActors";
-import getActorsCount from "../../graphql/queries/Actor/getActorsCount";
+import getArtists from "@/graphql/queries/artist/getArtists.gql";
+import getArtistsCount from "@/graphql/queries/artist/getArtistsCount.gql";
 export default {
   layout: "main",
   data() {
@@ -56,7 +56,7 @@ export default {
       this.filters.loading = true;
       try {
         const httpResponse = await this.$apollo.query({
-          query: getActors,
+          query: getArtists,
           variables: {
             pagination: {
               limit: this.filters.limit,
@@ -64,19 +64,21 @@ export default {
             },
           },
         });
-        const data = httpResponse.data.getActors;
+        const data = httpResponse.data.getArtists;
         this.listArtists = data;
         this.filters.loading = false;
       } catch (error) {
         console.log(error);
+      }finally{
+        this.filters.loading = false;
       }
     },
     async getActorsCount() {
       try {
         const httpResponse = await this.$apollo.query({
-          query: getActorsCount,
+          query: getArtistsCount,
         });
-        const data = httpResponse?.data?.getActorsCount || 0;
+        const data = httpResponse?.data?.getArtistsCount || 0;
         this.filters.tottalCount = data;
       } catch (error) {
         ///

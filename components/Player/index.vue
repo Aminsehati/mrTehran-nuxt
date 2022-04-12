@@ -1,15 +1,17 @@
 <template>
-  <div class="player" v-show="ActivePlayer.imageUrl">
+  <div class="player" v-show="ActivePlayer.imgUrl">
     <div class="player-seection-track">
       <div class="image-track">
-        <img :src="getImageUrl(ActivePlayer.imageUrl)" />
+        <img :src="getImageUrl(ActivePlayer.imgUrl)" />
       </div>
       <div class="detail-track pl-15">
         <p>
           {{ ActivePlayer.trackName }}
         </p>
         <p class="text-light">
-          {{ ActivePlayer.ActorName }}
+          <span v-for="artist in ActivePlayer.artists" :key="artist._id">
+            {{ artist.name }}
+          </span>
         </p>
       </div>
       <span class="volume-player">
@@ -110,9 +112,9 @@ export default {
       }
     },
   },
-  destroyed(){
+  destroyed() {
     this.$store.commit("player/setChangeStatusPlaying", false);
     this.audioPlayer.pause();
-  }
+  },
 };
 </script>
