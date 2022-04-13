@@ -5,7 +5,7 @@ query getTrack($id:ID!) {
     audioUrl
     trackName
     view
-    actors {
+    artists {
       _id
       name
       imgUrl

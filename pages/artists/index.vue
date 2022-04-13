@@ -41,7 +41,7 @@ export default {
       listArtists: [],
       filters: {
         loading: false,
-        limit: 4,
+        limit: 20,
         skip: 1,
         tottalCount: 0,
       },

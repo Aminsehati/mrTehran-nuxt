@@ -1,10 +1,9 @@
 .cover-playList{
     position: relative;
-    min-height: 48vh;
+    min-height: 40vh;
     margin-bottom: 60px;
     .wrapper {
       position: relative;
-      min-height: 48vh;
       border-radius: 0.5rem;
       display: flex;
       justify-content: center;
@@ -12,7 +11,10 @@
       padding-bottom: 15px;
       z-index: 2;
       background: rgba(255, 255, 255, 0.07);
-      background: red;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-position: center ;
+      min-height: 40vh;
       &::before {
         content: "";
         position: absolute;
@@ -32,6 +34,7 @@
       .wrapper-content {
         width: 100%;
         color: #fff;
+        padding-bottom: 20px;
       }
       .btn-group {
         display: flex;

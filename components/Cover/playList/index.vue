@@ -10,7 +10,7 @@
           Followers
         </p>
         <div class="btn-group">
-          <button class="btn_item">
+          <button class="btn_item" @click="$emit('onFollow')">
             <i class="fa-regular fa-circle text-12 mr-5"></i>
             Follow
           </button>
@@ -40,16 +40,18 @@ export default {
   computed: {
     coverArtist() {
       return {
-        background: `url(${this.playListInfo.coverImage})`,
-        backgroundPosition:"center",
-        backgroundSize:"cover"
+        backgroundImage: `url(${this.playListInfo.coverImage})`
       };
     },
   },
   methods: {
     countFollowers(count) {
       let label = count > 1000 ? "k" : "";
-      return `${Number(count) / 1000}${label}`;
+      if (count > 1000) {
+        return `${Number(count) / 1000}${label}`;
+      } else {
+        return `${Number(count)}${label}`;
+      }
     },
   },
 };

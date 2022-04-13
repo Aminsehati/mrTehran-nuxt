@@ -3,6 +3,22 @@
     <div class="container-sm">
       <Loading v-if="filters.loading" />
       <div v-else>
+        <div class="best-of-month mb-30">
+          <div class="mb-20 flex justify-between items-center">
+            <Title> Best of Month </Title>
+            <nuxt-link to="/browse/popular" class="text-white">
+              See All
+              <i class="fa-solid fa-chevron-right ml-10 text-12"></i>
+            </nuxt-link>
+          </div>
+          <div class="grid xl:grid-cols-3 sm:grid-cols-2 gap-x-20 gap-y-20">
+            <TrackItem
+              :trackInfo="track"
+              v-for="track in listTracksBestInMonth"
+              :key="track.id"
+            />
+          </div>
+        </div>
         <div class="top-play-list mb-30">
           <div class="mb-20 flex justify-between items-center">
             <Title> Top Playlists </Title>
@@ -52,12 +68,14 @@
 import "./style.scss";
 import getPlayList from "@/graphql/queries/playList/getPlayLists.gql";
 import getArtists from "@/graphql/queries/artist/getArtists.gql";
+import getTracks from "@/graphql/queries/track/getTracks.gql";
 export default {
   layout: "main",
   data() {
     return {
       listPlaylists: [],
       listActors: [],
+      listTracksBestInMonth: [],
       filters: {
         loading: false,
       },
@@ -66,6 +84,7 @@ export default {
   async fetch() {
     await this.getlistPlaylist();
     await this.getListActos();
+    await this.getListTracksInMonths();
   },
   methods: {
     async getlistPlaylist() {
@@ -73,6 +92,12 @@ export default {
       try {
         const httpResponse = await this.$apollo.query({
           query: getPlayList,
+          variables: {
+            pagination: {
+              limit: 6,
+              skip: 1,
+            },
+          },
         });
         const data = httpResponse.data.getPlayLists;
         this.listPlaylists = data;
@@ -102,6 +127,23 @@ export default {
         console.log(error);
       } finally {
         this.filters.loading = false;
+      }
+    },
+    async getListTracksInMonths() {
+      try {
+        const httpResponse = await this.$apollo.query({
+          query: getTracks,
+          variables: {
+            pagination: {
+              limit: 12,
+              skip: 1,
+            },
+          },
+        });
+        const data = httpResponse?.data?.getTracks || [];
+        this.listTracksBestInMonth = data;
+      } catch (error) {
+        ////
       }
     },
   },

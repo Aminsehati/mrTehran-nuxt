@@ -1,0 +1,11 @@
+mutation FollowPlayList($id:ID!) {
+  FollowPlayList(id:$id) {
+    _id
+    name
+    imgUrl
+    coverImgUrl
+    Followers
+    createdAt
+    updatedAt
+  }
+}

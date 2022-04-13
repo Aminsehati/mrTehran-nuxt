@@ -1,7 +1,8 @@
 <template>
   <div class="playlist-page">
-    <div class="container-sm">
-      <CoverPlayList :playListInfo="playListInfo" />
+    <Loading v-if="filters.loading" />
+    <div class="container-sm" v-else>
+      <CoverPlayList :playListInfo="playListInfo" @onFollow="followArtist" />
     </div>
   </div>
 </template>
@@ -9,8 +10,9 @@
 <script>
 import "./style.scss";
 import getPlayList from "@/graphql/queries/playList/getPlayList.gql";
+import FollowPlayList from "@/graphql/mutations/playList/FollowPlayList.gql";
 export default {
-  layout:"main",
+  layout: "main",
   data() {
     return {
       playListInfo: {
@@ -18,10 +20,13 @@ export default {
         coverImage: "",
         Followers: 0,
       },
+      filters: {
+        loading: false,
+      },
     };
   },
   async fetch() {
-    this.getPlayList();
+    await this.getPlayList();
   },
   methods: {
     async getPlayList() {
@@ -34,13 +39,33 @@ export default {
           },
         });
         const data = httpResponse.data.getPlayList;
+        console.log("data", data);
         this.playListInfo = {
           ...this.playListInfo,
           name: data?.name,
           Followers: data?.Followers,
-          coverImage: this.getImageUrl(data?.coverImgUrl),
+          coverImage: this.getImageUrl(data?.coverImgUrl || ""),
         };
       } catch (error) {}
+    },
+    async followArtist() {
+      try {
+        this.filters.loading = true ;
+        const { id } = this.$route.params;
+        const httpResponse = await this.$apollo.mutate({
+          mutation: FollowPlayList,
+          variables: {
+            id,
+          },
+        });
+        const data = httpResponse.data.FollowPlayList;
+        this.playListInfo.Followers = data.Followers || 0;
+        this.filters.loading = false ;
+      } catch (error) {
+        console.log(error);
+      }finally{
+        this.filters.loading = false ;
+      }
     },
   },
 };

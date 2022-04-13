@@ -24,7 +24,7 @@ export default {
         trackName: "",
         audioUrl: "",
         view: "",
-        actors: [],
+        artists: [],
         createdAt: "",
       },
       filters: {
@@ -34,7 +34,6 @@ export default {
   },
   async fetch() {
     await this.getTrackItem();
-    await this.viewTrack();
   },
   methods: {
     async getTrackItem() {
@@ -54,24 +53,14 @@ export default {
           trackName: data?.trackName,
           audioUrl: data?.audioUrl,
           view: data?.view,
-          actors: data?.actors,
+          artists: data?.artists || [],
           createdAt: data.createdAt && this.convertDate(data.createdAt),
         };
         this.filters.loading = false;
-      } catch (error) {}
-    },
-    async viewTrack() {
-      try {
-        const { id } = this.$route.params;
-        const httpResponse = await this.$apollo.mutate({
-          mutation: viewTrack,
-          variables: {
-            trackID: id,
-          },
-        });
-        console.log(httpResponse,"httpResponse");
       } catch (error) {
-        ///
+        console.log('error',error);
+      } finally {
+        this.filters.loading = false;
       }
     },
   },
