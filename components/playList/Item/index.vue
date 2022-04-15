@@ -9,7 +9,7 @@
           {{ playListInfo.name }}
         </h2>
         <p class="text-light followers">
-          <!-- <i class="fa-regular fa-user text-12"></i> -->
+          <i class="fa-regular fa-user text-12 mr-5"></i>
           {{ Followers(playListInfo.Followers) }}
         </p>
       </div>

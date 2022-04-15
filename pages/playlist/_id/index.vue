@@ -39,7 +39,6 @@ export default {
           },
         });
         const data = httpResponse.data.getPlayList;
-        console.log("data", data);
         this.playListInfo = {
           ...this.playListInfo,
           name: data?.name,
