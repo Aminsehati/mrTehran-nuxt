@@ -113,6 +113,11 @@ export default {
       }
     },
   },
+  head(){
+    return {
+      title:`${this.ArtistInfo.name} | MrTehran.com`
+    }
+  }
 };
 </script>
 

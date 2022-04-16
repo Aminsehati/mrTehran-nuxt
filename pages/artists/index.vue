@@ -89,6 +89,11 @@ export default {
       this.getlistArtist();
     },
   },
+  head() {
+    return {
+      title: "Singers and Artists | Page 1 | MrTehran.com",
+    };
+  },
 };
 </script>
 

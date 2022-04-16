@@ -26,25 +26,6 @@ export const mutations = {
   setAudioCurrentTime(state, item) {
     state.ActivePlayer.audioCurrentTime = item;
   },
-  setImageUrl(state, item) {
-    state.ActivePlayer.imageUrl = item.imgUrl
-  },
-  setTrackName(state, item) {
-    state.ActivePlayer.trackName = item.trackName
-  },
-  setActorName(state, item) {
-    let actorName = "";
-    item.actors.forEach((actor, index) => {
-      actorName += actor.name;
-      if (item.actors.length > index + 1) {
-        actorName += " & "
-      }
-    })
-    state.ActivePlayer.ActorName = actorName
-  },
-  setIdPlayer(state, item) {
-    state.ActivePlayer.idPlayer = item._id;
-  },
   setActivePlayer(state, item) {
     state.ActivePlayer = {
       ...state.ActivePlayer,
@@ -52,6 +33,17 @@ export const mutations = {
       trackName: item?.trackName || "",
       imgUrl: item?.imgUrl || "",
       idPlayer: item?._id || ""
+    }
+  },
+  resetActivePlayer(state) {
+    state.ActivePlayer = {
+      ...state.ActivePlayer,
+      artists: [],
+      trackName: "",
+      imgUrl: "",
+      idPlayer: "",
+      audioDuration: 0,
+      audioCurrentTime: 0
     }
   }
 }

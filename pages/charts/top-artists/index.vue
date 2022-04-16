@@ -64,6 +64,11 @@ export default {
       }
     },
   },
+  head() {
+    return {
+      title: "Top Artists Chart | MrTehran.com",
+    };
+  },
 };
 </script>
 

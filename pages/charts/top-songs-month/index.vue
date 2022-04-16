@@ -22,7 +22,6 @@
 <script>
 import "./style.scss";
 import getTracks from "@/graphql/queries/track/getTracks.gql";
-import Loading from "~/components/Loading/index.vue";
 export default {
   layout: "chart",
   data() {
@@ -69,7 +68,11 @@ export default {
       }
     },
   },
-  components: { Loading },
+  head() {
+    return {
+      title: "Top Songs Month Chart | MrTehran.com",
+    };
+  },
 };
 </script>
 

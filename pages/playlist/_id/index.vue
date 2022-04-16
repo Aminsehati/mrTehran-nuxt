@@ -49,7 +49,7 @@ export default {
     },
     async followArtist() {
       try {
-        this.filters.loading = true ;
+        this.filters.loading = true;
         const { id } = this.$route.params;
         const httpResponse = await this.$apollo.mutate({
           mutation: FollowPlayList,
@@ -59,13 +59,18 @@ export default {
         });
         const data = httpResponse.data.FollowPlayList;
         this.playListInfo.Followers = data.Followers || 0;
-        this.filters.loading = false ;
+        this.filters.loading = false;
       } catch (error) {
         ////
-      }finally{
-        this.filters.loading = false ;
+      } finally {
+        this.filters.loading = false;
       }
     },
+  },
+  head() {
+    return {
+      title: `${this.playListInfo.name} | MrTehran.com`,
+    };
   },
 };
 </script>

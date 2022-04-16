@@ -37,18 +37,59 @@
       {{ trackInfo.view }}
       Plays
     </div>
-    <span class="play-track mr-16">
+    <span
+      @click="pauseTrack"
+      :class="[
+        'pause-track mr-16',
+        {
+          'play-track-active': activePlayer.idPlayer === trackInfo._id,
+        },
+      ]"
+      v-if="activePlayer.idPlayer === trackInfo._id && activePlayer.playing"
+    >
+      <i class="fa-solid fa-pause"></i>
+    </span>
+    <span
+      class="pause-track mr-16"
+      v-else
+      :class="[
+        'play-track mr-16',
+        { 'play-track-active': activePlayer.idPlayer === trackInfo._id },
+      ]"
+      @click="playTrack(trackInfo)"
+    >
       <i class="fa-solid fa-play"></i>
     </span>
   </div>
 </template>
 <script>
 import "./style.scss";
+import { mapGetters } from "vuex";
 export default {
   props: {
     trackInfo: {
       type: Object,
       default: () => {},
+    },
+  },
+  computed: {
+    ...mapGetters({
+      audioPlayer: "player/getAudio",
+      activePlayer: "player/getActivePlayer",
+    }),
+  },
+  methods: {
+    async playTrack(track) {
+      if (track._id !== this.activePlayer.idPlayer) {
+        this.$store.commit("player/setActivePlayer", track);
+        this.audioPlayer.src = this.getAudioUrl(track.audioUrl);
+      }
+      this.$store.commit("player/setChangeStatusPlaying", true);
+      this.audioPlayer.play();
+    },
+    pauseTrack() {
+      this.$store.commit("player/setChangeStatusPlaying", false);
+      this.audioPlayer.pause();
     },
   },
 };

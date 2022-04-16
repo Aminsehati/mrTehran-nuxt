@@ -115,6 +115,7 @@ export default {
     if (this.$nuxt?.nuxt?.err?.statusCode === 404) {
       this.$store.commit("player/setChangeStatusPlaying", false);
       this.audioPlayer.pause();
+      this.$store.commit("player/resetActivePlayer");
     }
   },
 };

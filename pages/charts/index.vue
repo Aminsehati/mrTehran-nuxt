@@ -68,6 +68,11 @@ export default {
       }
     },
   },
+  head(){
+    return {
+      title:"Top Songs Week Chart | MrTehran.com"
+    }
+  }
 };
 </script>
 

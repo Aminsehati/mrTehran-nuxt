@@ -19,7 +19,7 @@
         margin-bottom: 3px;
         a {
             &:hover {
-                color: rgba(255,255,255,0.5);
+                color: rgba(255, 255, 255, 0.5);
             }
         }
     }
@@ -29,7 +29,8 @@
         width: 25%;
         display: inline-block;
     }
-    .play-track {
+    .play-track,
+    .pause-track {
         width: 36px;
         height: 36px;
         display: flex;
@@ -40,6 +41,10 @@
         flex-shrink: 0;
         border-radius: 50%;
         cursor: pointer;
+        &.play-track-active {
+            background: #fff;
+            color: #202020;
+        }
         i {
             font-size: 12px;
         }

@@ -69,5 +69,10 @@ export default {
       }
     },
   },
+  head(){
+    return {
+      title:"Top Songs Of All Time Chart | MrTehran.com"
+    }
+  }
 };
 </script>

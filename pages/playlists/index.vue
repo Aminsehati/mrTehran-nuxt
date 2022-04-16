@@ -80,6 +80,11 @@ export default {
       this.getPlayListItem()
     }
   },
+  head(){
+    return {
+      title:"Playlists | MrTehran.com"
+    }
+  }
 };
 </script>
 
