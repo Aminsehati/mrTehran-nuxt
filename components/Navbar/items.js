@@ -26,7 +26,7 @@ const items = [{
   {
     id: 5,
     name: "Top Charts",
-    path: "/",
+    path: "/charts",
     className:"fa-solid fa-chart-pie"
   },
 ]

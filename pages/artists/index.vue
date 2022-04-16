@@ -68,8 +68,8 @@ export default {
         this.listArtists = data;
         this.filters.loading = false;
       } catch (error) {
-        console.log(error);
-      }finally{
+        /////
+      } finally {
         this.filters.loading = false;
       }
     },

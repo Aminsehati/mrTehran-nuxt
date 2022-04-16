@@ -53,7 +53,6 @@ export const mutations = {
       imgUrl: item?.imgUrl || "",
       idPlayer: item?._id || ""
     }
-    console.log(item, 'item');
   }
 }
 export const getters = {

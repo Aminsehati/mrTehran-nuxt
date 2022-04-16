@@ -1,5 +1,5 @@
-query getArtists($pagination:Pagination) {
-  getArtists(pagination:$pagination) {
+query getArtists($pagination:Pagination , $sort:sortArtists) {
+  getArtists(pagination:$pagination , sort:$sort) {
     _id
     name
     imgUrl

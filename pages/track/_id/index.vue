@@ -58,7 +58,7 @@ export default {
         };
         this.filters.loading = false;
       } catch (error) {
-        console.log('error',error);
+        //////
       } finally {
         this.filters.loading = false;
       }

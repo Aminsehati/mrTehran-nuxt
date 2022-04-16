@@ -90,7 +90,7 @@ export default {
         const data = httpResponse.data.getTracks;
         this.listTracks = data;
       } catch (error) {
-        console.log("error", error);
+        //////
       }
     },
     async followArtist() {

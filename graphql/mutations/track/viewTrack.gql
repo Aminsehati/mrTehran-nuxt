@@ -1,21 +1,20 @@
-mutation viewTrack($trackID:ID!) {
-  viewTrack(input:{
-    trackID: $trackID
-  }) {
-    _id
+mutation viewTrack($id:ID!) {
+  viewTrack(id:$id) {
+    _id 
     imgUrl
     audioUrl
     trackName
-    actors {
+    view
+    like
+    artists {
       _id
       name
       imgUrl
+      name
       coverImgUrl
       Followers
     }
     createdAt
     updatedAt
-    view
-    like
   }
 }

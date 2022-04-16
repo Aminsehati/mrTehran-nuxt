@@ -13,8 +13,13 @@ const mixins = {
     getAudioUrl(src) {
       return `${this.baseAudioUrl}/${src}`
     },
-    convertDate(date){
-        return moment(date,'YYYY-MM-DD').format('YYYY-MM-DD')
+    convertDate(date) {
+      const validDate = moment(date, 'YYYY-MM-DD').isValid();
+      if (!validDate) {
+        return ""
+      } else {
+        return moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD')
+      }
     }
   },
 }

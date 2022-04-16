@@ -96,7 +96,6 @@ export default {
       this.audioPlayer.loop = true;
       this.audioPlayer.addEventListener("progress", () => {});
       this.audioPlayer.addEventListener("canplay", () => {
-        console.log("can play");
         this.$store.commit(
           "player/setAudioDuration",
           parseFloat(this.audioPlayer.duration)
@@ -113,8 +112,10 @@ export default {
     },
   },
   destroyed() {
-    this.$store.commit("player/setChangeStatusPlaying", false);
-    this.audioPlayer.pause();
+    if (this.$nuxt?.nuxt?.err?.statusCode === 404) {
+      this.$store.commit("player/setChangeStatusPlaying", false);
+      this.audioPlayer.pause();
+    }
   },
 };
 </script>

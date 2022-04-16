@@ -124,7 +124,7 @@ export default {
         this.listActors = data;
         this.filters.loading = false;
       } catch (error) {
-        console.log(error);
+        ////
       } finally {
         this.filters.loading = false;
       }

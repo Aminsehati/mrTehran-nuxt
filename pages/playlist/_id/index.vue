@@ -61,7 +61,7 @@ export default {
         this.playListInfo.Followers = data.Followers || 0;
         this.filters.loading = false ;
       } catch (error) {
-        console.log(error);
+        ////
       }finally{
         this.filters.loading = false ;
       }
