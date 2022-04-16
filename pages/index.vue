@@ -3,6 +3,24 @@
     <div class="container-sm">
       <Loading v-if="filters.loading" />
       <div v-else>
+        <div class="recently-added mb-30">
+          <div
+            class="title-recently-added mb-20 flex justify-between items-center"
+          >
+            <Title> Recently Added </Title>
+            <nuxt-link to="/browse/latest" class="text-white">
+              See All
+              <i class="fa-solid fa-chevron-right ml-10 text-12"></i>
+            </nuxt-link>
+          </div>
+          <div class="grid grid-cols-6 gap-x-10">
+            <CardTrack
+              v-for="track in listTracksRecentlyAdded"
+              :key="track._id"
+              :trackInfo="track"
+            />
+          </div>
+        </div>
         <div class="best-of-month mb-30">
           <div class="mb-20 flex justify-between items-center">
             <Title> Best of Month </Title>
@@ -76,12 +94,14 @@ export default {
       listPlaylists: [],
       listActors: [],
       listTracksBestInMonth: [],
+      listTracksRecentlyAdded: [],
       filters: {
         loading: false,
       },
     };
   },
   async fetch() {
+    await this.getlistTracksRecentlyAdded();
     await this.getlistPlaylist();
     await this.getListActos();
     await this.getListTracksInMonths();
@@ -144,6 +164,26 @@ export default {
         this.listTracksBestInMonth = data;
       } catch (error) {
         ////
+      }
+    },
+    async getlistTracksRecentlyAdded() {
+      try {
+        const httpResponse = await this.$apollo.query({
+          query: getTracks,
+          variables: {
+            pagination: {
+              limit: 6,
+              skip: 1,
+            },
+            sort: {
+              createdAt: -1,
+            },
+          },
+        });
+        const data = httpResponse?.data?.getTracks || [];
+        this.listTracksRecentlyAdded = data;
+      } catch (error) {
+        ///
       }
     },
   },

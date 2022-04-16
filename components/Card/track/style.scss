@@ -1,0 +1,30 @@
+.card-track {
+    .image-track {
+        img {
+            border-radius: 0.5rem;
+            transition: all 0.3s ease-in-out;
+            &:hover {
+                opacity: 0.6;
+                transition: all 0.3s ease-in-out;
+            }
+        }
+    }
+    .play-track,
+    .pause-track {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.8rem;
+        text-align: center;
+        cursor: pointer;
+        width: 36px;
+        height: 36px;
+        line-height: 37px;
+        border-radius: 100%;
+        background-color: rgba(255, 255, 255, 0.07);
+        display: inline-block;
+        flex-shrink: 0;
+        &.play-track-active{
+            background: #fff;
+            color: #202020;
+        }
+    }
+}

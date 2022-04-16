@@ -62,7 +62,7 @@ export default {
       } else {
         return `0${index + 1}`;
       }
-    },
+    }
   },
   head() {
     return {

@@ -9,6 +9,7 @@
         :key="track._id"
         :trackInfo="track"
         class="mb-20"
+        @viewTrack="viewTrack"
       >
         <template slot="number">
           {{ numberTrack(index) }}
@@ -34,10 +35,10 @@ export default {
     };
   },
   async fetch() {
-    await this.getTopTracksInMonth();
+    await this.getTopTracksInAllTime();
   },
   methods: {
-    async getTopTracksInMonth() {
+    async getTopTracksInAllTime() {
       try {
         this.filters.loading = true;
         const httpResponse = await this.$apollo.query({
@@ -56,7 +57,6 @@ export default {
         this.tracks = data;
         this.filters.loading = false;
       } catch (error) {
-        ////
       } finally {
         this.filters.loading = false;
       }
@@ -68,11 +68,14 @@ export default {
         return `0${index + 1}`;
       }
     },
+    async viewTrack() {
+      await this.getTopTracksInAllTime()
+    },
   },
-  head(){
+  head() {
     return {
-      title:"Top Songs Of All Time Chart | MrTehran.com"
-    }
-  }
+      title: "Top Songs Of All Time Chart | MrTehran.com",
+    };
+  },
 };
 </script>

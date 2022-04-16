@@ -9,6 +9,7 @@
         :key="track._id"
         :trackInfo="track"
         class="mb-20"
+        @viewTrack="viewTrack"
       >
         <template slot="number">
           {{ numberTrack(index) }}
@@ -66,6 +67,9 @@ export default {
       } else {
         return `0${index + 1}`;
       }
+    },
+    async viewTrack() {
+      await this.getTopTracksInMonth();
     },
   },
   head() {
