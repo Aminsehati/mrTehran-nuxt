@@ -3,6 +3,7 @@
   border-radius: 0.5rem;
   .cover-track-wrapper {
     display: flex;
+    flex-wrap: wrap;
     .image {
       flex: 0 0 25%;
       max-width: 25%;
@@ -36,40 +37,21 @@
           }
         }
       }
-      .btn__group {
-        .btn__bookMark {
-          position: relative;
-          &::before {
-            content: "\f02e";
-            font-family: "Font Awesome 6 Free";
-            margin-right: 8px;
-          }
-        }
-        .btn__like {
-          position: relative;
-          &::before {
-            content: "\f004";
-            font-family: "Font Awesome 6 Free";
-            margin-right: 8px;
-          }
-        }
-        .btn__download {
-          position: relative;
-          &::before {
-            content: "\f004";
-            font-family: "Font Awesome 6 Free";
-            margin-right: 8px;
-          }
-        }
-        .btn__share {
-          position: relative;
-          &::before {
-            content: "\f1e0";
-            font-family: "Font Awesome 6 Free";
-            margin-right: 8px;
-          }
-        }
-      }
+    }
+  }
+}
+@media screen and (max-width: 992px) {
+  .cover-track .cover-track-wrapper .content {
+    padding-bottom: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .cover-track .cover-track-wrapper {
+    .image,
+    .content {
+      flex: 0 0 100%;
+      max-width: 100%;
     }
   }
 }

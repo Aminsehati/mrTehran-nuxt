@@ -2,12 +2,14 @@
   <div class="player" v-show="ActivePlayer.imgUrl">
     <div class="player-seection-track">
       <div class="image-track">
-        <img :src="getImageUrl(ActivePlayer.imgUrl)" />
+        <nuxt-link :to="`/track/${ActivePlayer.idPlayer}`">
+          <img :src="getImageUrl(ActivePlayer.imgUrl)" />
+        </nuxt-link>
       </div>
       <div class="detail-track pl-15">
-        <p>
+        <nuxt-link :to="`/track/${ActivePlayer.idPlayer}`">
           {{ ActivePlayer.trackName }}
-        </p>
+        </nuxt-link>
         <p class="text-light">
           <span v-for="artist in ActivePlayer.artists" :key="artist._id">
             {{ artist.name }}

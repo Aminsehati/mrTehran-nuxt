@@ -1,9 +1,9 @@
 <template>
   <div class="home-page">
-    <div class="container-sm">
-      <Loading v-if="filters.loading" />
-      <div v-else>
-        <div class="recently-added mb-30">
+    <Loading v-if="filters.loading" />
+    <div v-else>
+      <div class="recently-added mb-30">
+        <div class="container-sm">
           <div
             class="title-recently-added mb-20 flex justify-between items-center"
           >
@@ -13,7 +13,18 @@
               <i class="fa-solid fa-chevron-right ml-10 text-12"></i>
             </nuxt-link>
           </div>
-          <div class="grid grid-cols-6 gap-x-10">
+          <div
+            class="
+              grid
+              gap-x-10
+              lg:grid-cols-6
+              md:grid-cols-5
+              sm:grid-cols-4
+              xs:grid-cols-3
+              grid-cols-2
+              gap-y-15
+            "
+          >
             <CardTrack
               v-for="track in listTracksRecentlyAdded"
               :key="track._id"
@@ -21,7 +32,9 @@
             />
           </div>
         </div>
-        <div class="best-of-month mb-30">
+      </div>
+      <div class="best-of-month mb-30">
+        <div class="container-sm">
           <div class="mb-20 flex justify-between items-center">
             <Title> Best of Month </Title>
             <nuxt-link to="/browse/popular" class="text-white">
@@ -37,7 +50,9 @@
             />
           </div>
         </div>
-        <div class="top-play-list mb-30">
+      </div>
+      <div class="top-play-list mb-30">
+        <div class="container-sm">
           <div class="mb-20 flex justify-between items-center">
             <Title> Top Playlists </Title>
             <nuxt-link to="/artists" class="text-white">
@@ -53,7 +68,9 @@
             />
           </div>
         </div>
-        <div class="top-artist-list">
+      </div>
+      <div class="top-artist-list" @mousedown="Enter">
+        <div class="container-sm">
           <div class="mb-20 flex justify-between items-center">
             <Title> Top Artists </Title>
             <nuxt-link to="/artists" class="text-white">
@@ -185,6 +202,9 @@ export default {
       } catch (error) {
         ///
       }
+    },
+    Enter() {
+      console.log("this is rest");
     },
   },
 };

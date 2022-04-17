@@ -1,10 +1,10 @@
-query getTrack($id:ID!) {
-  getTrack(id:$id) {
+mutation likeTrack($id:ID!) {
+  likeTrack(id:$id) {
     _id
     imgUrl
     audioUrl
     trackName
-   	view
+    view
     like
     artists {
       _id
@@ -12,6 +12,8 @@ query getTrack($id:ID!) {
       imgUrl
       coverImgUrl
       Followers
+      createdAt
+      updatedAt
     }
     createdAt
     updatedAt

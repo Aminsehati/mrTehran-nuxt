@@ -22,9 +22,19 @@
         background-color: rgba(255, 255, 255, 0.07);
         display: inline-block;
         flex-shrink: 0;
-        &.play-track-active{
+        &.play-track-active {
             background: #fff;
             color: #202020;
+        }
+    }
+    .track-info {
+        width: 100%;
+        .track-name {
+            a {
+                &:hover {
+                    color: rgba(255,255,255,0.5);
+                }
+            }
         }
     }
 }

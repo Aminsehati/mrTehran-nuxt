@@ -26,7 +26,8 @@ module.exports = {
       }
     },
     colors: {
-      'light': "rgba(255,255,255,0.5)"
+      'light': "rgba(255,255,255,0.5)",
+      'yellow':"#ffc107"
     }
   },
   variants: {

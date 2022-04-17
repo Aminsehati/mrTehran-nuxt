@@ -5,7 +5,7 @@
         <Loading />
       </div>
       <div v-else-if="filters.loading === false">
-        <CoverTrack :trackInfo="trackItem" />
+        <CoverTrack :trackInfo="trackItem" @like="likeTrack" ref="track"/>
       </div>
     </div>
   </div>
@@ -13,7 +13,7 @@
 
 <script>
 import getTrack from "@/graphql/queries/track/getTrack.gql";
-import viewTrack from "@/graphql/mutations/track/viewTrack.gql";
+import likeTrack from "@/graphql/mutations/track/likeTrack.gql";
 import "./style.scss";
 export default {
   layout: "main",
@@ -23,7 +23,8 @@ export default {
         imgUrl: "",
         trackName: "",
         audioUrl: "",
-        view: "",
+        view: 0,
+        like:0,
         artists: [],
         createdAt: "",
       },
@@ -49,18 +50,36 @@ export default {
         const data = httpResponse.data.getTrack;
         this.trackItem = {
           ...this.trackItem,
-          imgUrl: data?.imgUrl,
-          trackName: data?.trackName,
-          audioUrl: data?.audioUrl,
-          view: data?.view,
+          _id: data?._id || "",
+          imgUrl: data?.imgUrl || "",
+          trackName: data?.trackName || "",
+          audioUrl: data?.audioUrl || "",
+          view: data?.view || 0,
           artists: data?.artists || [],
           createdAt: data.createdAt && this.convertDate(data.createdAt),
+          like: data?.like || 0,
         };
         this.filters.loading = false;
       } catch (error) {
         //////
       } finally {
         this.filters.loading = false;
+      }
+    },
+    async likeTrack(item) {
+      try {
+        const httpResponse = await this.$apollo.mutate({
+          mutation: likeTrack,
+          variables: {
+            id: item._id,
+          },
+        });
+        const data = httpResponse.data.likeTrack;
+        this.trackItem.like = data?.like || 0 ;
+        const refComponent = this.$refs.track;
+        refComponent.hasLiked = true ;
+      } catch (error) {
+        ////
       }
     },
   },

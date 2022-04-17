@@ -50,6 +50,7 @@
 <script>
 import "./style.scss";
 import { mapGetters } from "vuex";
+import viewTrack from "@/graphql/mutations/track/viewTrack.gql";
 export default {
   props: {
     trackInfo: {
@@ -68,6 +69,7 @@ export default {
       if (track._id !== this.activePlayer.idPlayer) {
         this.$store.commit("player/setActivePlayer", track);
         this.audioPlayer.src = this.getAudioUrl(track.audioUrl);
+        await this.viewTrack()
       }
       this.$store.commit("player/setChangeStatusPlaying", true);
       this.audioPlayer.play();
@@ -75,6 +77,19 @@ export default {
     pauseTrack() {
       this.$store.commit("player/setChangeStatusPlaying", false);
       this.audioPlayer.pause();
+    },
+    async viewTrack() {
+      try {
+        const id = this.activePlayer.idPlayer;
+        await this.$apollo.mutate({
+          mutation: viewTrack,
+          variables: {
+            id,
+          },
+        });
+      } catch (error) {
+        //////
+      }
     },
   },
 };
