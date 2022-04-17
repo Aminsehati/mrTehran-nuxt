@@ -8,6 +8,7 @@
             :class="['text-13 text-light text-400']"
           >
           <i :class="navbar.className"></i>
+          <i class="fa-regular fa-house-blank"></i>
             {{ navbar.name }}
           </nuxt-link>
         </li>

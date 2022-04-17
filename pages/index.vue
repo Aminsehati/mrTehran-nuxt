@@ -69,7 +69,7 @@
           </div>
         </div>
       </div>
-      <div class="top-artist-list" @mousedown="Enter">
+      <div class="top-artist-list" ref="topArtist">
         <div class="container-sm">
           <div class="mb-20 flex justify-between items-center">
             <Title> Top Artists </Title>
@@ -120,8 +120,13 @@ export default {
   async fetch() {
     await this.getlistTracksRecentlyAdded();
     await this.getlistPlaylist();
-    await this.getListActos();
     await this.getListTracksInMonths();
+  },
+  mounted() {
+    window.addEventListener("scroll", this.onscroll);
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.onscroll);
   },
   methods: {
     async getlistPlaylist() {
@@ -146,7 +151,6 @@ export default {
       }
     },
     async getListActos() {
-      this.filters.loading = true;
       try {
         const httpResponse = await this.$apollo.query({
           query: getArtists,
@@ -159,11 +163,9 @@ export default {
         });
         const data = httpResponse.data.getArtists;
         this.listActors = data;
-        this.filters.loading = false;
       } catch (error) {
         ////
       } finally {
-        this.filters.loading = false;
       }
     },
     async getListTracksInMonths() {
@@ -205,6 +207,16 @@ export default {
     },
     Enter() {
       console.log("this is rest");
+    },
+    async onscroll() {
+      const topArtist = this.$refs.topArtist;
+      if (topArtist) {
+        const marginTopArtist = topArtist.getBoundingClientRect().top;
+        const innerHeight = window.innerHeight;
+        if (marginTopArtist - innerHeight < -50) {
+          await this.getListActos();
+        }
+      }
     },
   },
 };

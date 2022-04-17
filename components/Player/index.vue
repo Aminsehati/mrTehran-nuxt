@@ -10,15 +10,34 @@
         <nuxt-link :to="`/track/${ActivePlayer.idPlayer}`">
           {{ ActivePlayer.trackName }}
         </nuxt-link>
-        <p class="text-light">
-          <span v-for="artist in ActivePlayer.artists" :key="artist._id">
+        <div>
+          <nuxt-link
+            v-for="(artist, index) in ActivePlayer.artists"
+            :key="artist._id"
+            :to="`/artist/${artist._id}`"
+            class="text-light text-12"
+          >
             {{ artist.name }}
-          </span>
-        </p>
+            {{ ActivePlayer.artists.length === index + 1 ? "" : "&" }}
+          </nuxt-link>
+        </div>
       </div>
-      <span class="volume-player">
-        <i class="fa-solid fa-volume-high"></i>
-      </span>
+      <div class="vloumn-wrapper">
+        <span class="volume-player">
+          <i class="fa-solid fa-volume-high"></i>
+        </span>
+        
+        <!-- <div class="box-volume">
+          <div class="progress-bar">
+            <div class="progress-bar-wrapper">
+              <div
+                class="progress-bar-active"
+                :style="styleProgressVloume"
+              ></div>
+            </div>
+          </div>
+        </div> -->
+      </div>
       <span class="list-player ml-15">
         <i class="fa-solid fa-bars"></i>
       </span>
@@ -57,6 +76,7 @@ export default {
   data() {
     return {
       chnageCurrentTime: false,
+      vloumeSize: 1,
     };
   },
   mounted() {
@@ -74,6 +94,11 @@ export default {
             this.ActivePlayer.audioDuration) *
             100 +
           "%",
+      };
+    },
+    styleProgressVloume() {
+      return {
+        height: `${this.vloumeSize}%`,
       };
     },
   },
@@ -111,6 +136,10 @@ export default {
           );
         });
       }
+    },
+    chnagevolume(e) {
+      const { value } = e.target;
+      this.vloumeSize = value;
     },
   },
   destroyed() {

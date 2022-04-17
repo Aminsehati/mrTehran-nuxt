@@ -2,7 +2,7 @@ const items = [{
     id: 1,
     name: "Home",
     path: "/",
-    className:"home"
+    className:"fa-solid fa-house"
   },
   {
     id: 2,
