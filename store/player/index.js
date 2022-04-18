@@ -8,7 +8,8 @@ export const state = () => ({
     playing: false,
     trackName: "",
     artists: []
-  }
+  },
+  lists: []
 })
 export const mutations = {
   setActivePlayer(state, item) {
@@ -45,6 +46,9 @@ export const mutations = {
       audioDuration: 0,
       audioCurrentTime: 0
     }
+  },
+  addToPlayerLists(state) {
+    console.log(state);
   }
 }
 export const getters = {

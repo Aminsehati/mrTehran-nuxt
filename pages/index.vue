@@ -33,6 +33,7 @@
           </div>
         </div>
       </div>
+      <Banner class="mb-30" />
       <div class="best-of-month mb-30">
         <div class="container-sm">
           <div class="mb-20 flex justify-between items-center">
@@ -51,7 +52,7 @@
           </div>
         </div>
       </div>
-      <div class="top-play-list mb-30">
+      <div class="top-play-list mb-30" ref="topPlayList">
         <div class="container-sm">
           <div class="mb-20 flex justify-between items-center">
             <Title> Top Playlists </Title>
@@ -105,7 +106,7 @@ import getPlayList from "@/graphql/queries/playList/getPlayLists.gql";
 import getArtists from "@/graphql/queries/artist/getArtists.gql";
 import getTracks from "@/graphql/queries/track/getTracks.gql";
 export default {
-  layout: "main",
+  layout: "home",
   data() {
     return {
       listPlaylists: [],
@@ -119,7 +120,6 @@ export default {
   },
   async fetch() {
     await this.getlistTracksRecentlyAdded();
-    await this.getlistPlaylist();
     await this.getListTracksInMonths();
   },
   mounted() {
@@ -130,7 +130,6 @@ export default {
   },
   methods: {
     async getlistPlaylist() {
-      this.filters.loading = true;
       try {
         const httpResponse = await this.$apollo.query({
           query: getPlayList,
@@ -143,11 +142,9 @@ export default {
         });
         const data = httpResponse.data.getPlayLists;
         this.listPlaylists = data;
-        this.filters.loading = false;
       } catch (error) {
         ///
       } finally {
-        this.filters.loading = false;
       }
     },
     async getListActos() {
@@ -205,16 +202,21 @@ export default {
         ///
       }
     },
-    Enter() {
-      console.log("this is rest");
-    },
     async onscroll() {
       const topArtist = this.$refs.topArtist;
+      const topPlayList = this.$refs.topPlayList;
       if (topArtist) {
         const marginTopArtist = topArtist.getBoundingClientRect().top;
         const innerHeight = window.innerHeight;
         if (marginTopArtist - innerHeight < -50) {
           await this.getListActos();
+        }
+      }
+      if (topPlayList) {
+        const marginTopArtist = topPlayList.getBoundingClientRect().top;
+        const innerHeightTopArtist = window.innerHeight;
+        if (marginTopArtist - innerHeightTopArtist < -50) {
+          await this.getlistPlaylist();
         }
       }
     },
