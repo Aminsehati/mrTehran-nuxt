@@ -1,5 +1,8 @@
 <template>
   <div class="chart-top-artists-page">
+    <div class="container-sm">
+      <Tabs :tabs="tabs" />
+    </div>
     <div class="container-sm" v-show="!filters.loading">
       <div class="title-chart-top-artists mb-10">
         <Title> Popular Artists </Title>
@@ -22,14 +25,16 @@
 <script>
 import "./style.scss";
 import getArtists from "@/graphql/queries/artist/getArtists.gql";
+import tabs from '@/content/tabs'
 export default {
-  layout: "chart",
+  layout: "main",
   data() {
     return {
       artists: [],
       filters: {
         loading: false,
       },
+      tabs,
     };
   },
   async fetch() {
@@ -62,7 +67,7 @@ export default {
       } else {
         return `0${index + 1}`;
       }
-    }
+    },
   },
   head() {
     return {

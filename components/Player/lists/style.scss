@@ -1,0 +1,89 @@
+.player-lists {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 25%;
+    min-height: 100vh;
+    background: rgba(44, 44, 44, 0.96) !important;
+    z-index: 9999;
+    transition: all 400ms ease-in-out;
+    .top-player-lists {
+        padding: 0 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .player-lists-body {
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
+        .player-list-item {
+            padding: 10px 15px;
+            display: flex;
+            transition: all 0.1s ease-in-out;
+            &:hover {
+                background: rgba(255, 255, 255, 0.07);
+                transition: all 0.1s ease-in-out;
+            }
+            .image {
+                width: 48px;
+                height: 48px;
+                flex-shrink: 0;
+                img {
+                    border-radius: 0.25rem;
+                }
+            }
+            .track-info {
+                width: 100%;
+                .track-name a {
+                    &:hover {
+                        color: rgba(255, 255, 255, 0.5);
+                    }
+                }
+                .artists a {
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+            .play-track,
+            .pause-track {
+                color: rgba(255, 255, 255, 0.5);
+                font-size: 0.8rem;
+                text-align: center;
+                cursor: pointer;
+                width: 36px;
+                height: 36px;
+                line-height: 37px;
+                border-radius: 100%;
+                background-color: rgba(255, 255, 255, 0.07);
+                display: inline-block;
+                transition: all 0.3s ease-in-out;
+                &.play-track-active {
+                    background: #fff;
+                    color: #202020;
+                }
+                &:not(.play-track-active):hover {
+                    color: rgba(255, 255, 255, 0.8);
+                    background-color: rgba(255, 255, 255, 0.1);
+                    transition: all 0.3s ease-in-out;
+                }
+            }
+        }
+    }
+    &.show-player-list {
+        left: 0;
+        transition: all 400ms ease-in-out;
+    }
+}
+@media screen and (max-width: 1200px) {
+    .player-lists {
+        width: 30%;
+    }
+}
+@media screen and (max-width: 992px) {
+    .player-lists {
+        width: 100%;
+    }
+}

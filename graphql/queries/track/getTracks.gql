@@ -1,5 +1,5 @@
-query getTracks($pagination:Pagination ,$sort:sortTrack , $filter:sortFilter ) {
-  getTracks(pagination:$pagination,filter:$filter , sort:$sort) {
+query getTracks($pagination:Pagination , $sort:sortTrack , $filter:filterTrack) {
+  getTracks(pagination:$pagination , sort:$sort , filter:$filter) {
     _id
     imgUrl
     audioUrl
@@ -12,8 +12,13 @@ query getTracks($pagination:Pagination ,$sort:sortTrack , $filter:sortFilter ) {
       imgUrl
       coverImgUrl
       Followers
-      createdAt
-      updatedAt
+    }
+    playlists {
+      _id
+      name
+      imgUrl
+      coverImgUrl
+      Followers
     }
     createdAt
     updatedAt

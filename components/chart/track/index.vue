@@ -1,7 +1,9 @@
 <template>
   <div class="track-chart">
     <div class="track-image">
-      <img :src="getImageUrl(trackInfo.imgUrl)" />
+      <nuxt-link :to="`/track/${(trackInfo, _id)}`">
+        <img :src="getImageUrl(trackInfo.imgUrl)" />
+      </nuxt-link>
     </div>
     <div class="number-track pl-16 pr-5 text-light text-16">
       <slot name="number" />
@@ -85,6 +87,7 @@ export default {
         this.$store.commit("player/setActivePlayer", track);
         this.audioPlayer.src = this.getAudioUrl(track.audioUrl);
         await this.viewTrack(track._id);
+        this.$store.commit("player/addToPlayerLists", track);
       }
       this.$store.commit("player/setChangeStatusPlaying", true);
       this.audioPlayer.play();

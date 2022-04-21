@@ -11,6 +11,7 @@
         </div>
       </div>
     </div>
+    <div v-if="error.statusCode === 500">500</div>
   </div>
 </template>
 <script>

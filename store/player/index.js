@@ -47,8 +47,26 @@ export const mutations = {
       audioCurrentTime: 0
     }
   },
-  addToPlayerLists(state) {
-    console.log(state);
+  addToPlayerLists(state, item) {
+    const hasListPlay = state.lists.some(list => list._id === item._id);
+    if (!hasListPlay) {
+      state.lists.push(item)
+    }
+  },
+  nextActivePlayer(state) {
+    const indexItem = state.lists.findIndex(list => list._id === state.ActivePlayer.idPlayer);
+    if (indexItem > -1 && indexItem !== 0) {
+      const item = state.lists[indexItem - 1];
+      state.ActivePlayer = {
+        ...state.ActivePlayer,
+        artists: item?.artists || [],
+        trackName: item?.trackName || "",
+        imgUrl: item?.imgUrl || "",
+        idPlayer: item?._id || ""
+      }
+      state.ActivePlayer.playing = true;
+      state.audio.play();
+    }
   }
 }
 export const getters = {
@@ -57,5 +75,8 @@ export const getters = {
   },
   getActivePlayer(state) {
     return state.ActivePlayer
+  },
+  getLists(state) {
+    return state.lists
   }
 }

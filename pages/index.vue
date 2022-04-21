@@ -106,7 +106,7 @@ import getPlayList from "@/graphql/queries/playList/getPlayLists.gql";
 import getArtists from "@/graphql/queries/artist/getArtists.gql";
 import getTracks from "@/graphql/queries/track/getTracks.gql";
 export default {
-  layout: "home",
+  layout: "main",
   data() {
     return {
       listPlaylists: [],

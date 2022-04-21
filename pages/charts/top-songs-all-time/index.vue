@@ -1,5 +1,8 @@
 <template>
   <div class="chart-top-songs-all-time">
+    <div class="container-sm">
+      <Tabs :tabs="tabs" />
+    </div>
     <div class="container-sm" v-show="!filters.loading">
       <div class="title-top-song-all-time mb-20">
         <Title> Top Songs Of All Time </Title>
@@ -24,14 +27,16 @@
 <script>
 import "./style.scss";
 import getTracks from "@/graphql/queries/track/getTracks.gql";
+import tabs from '@/content/tabs'
 export default {
-  layout: "chart",
+  layout: "main",
   data() {
     return {
       tracks: [],
       filters: {
         loading: false,
       },
+      tabs
     };
   },
   async fetch() {
@@ -69,7 +74,7 @@ export default {
       }
     },
     async viewTrack() {
-      await this.getTopTracksInAllTime()
+      await this.getTopTracksInAllTime();
     },
   },
   head() {

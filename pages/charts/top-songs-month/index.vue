@@ -1,5 +1,8 @@
 <template>
   <div class="chart-top-songs-month-page">
+    <div class="container-sm">
+      <Tabs :tabs="tabs" />
+    </div>
     <div class="container-sm" v-show="!filters.loading">
       <div class="title mb-20">
         <Title> Top Songs Month </Title>
@@ -23,14 +26,16 @@
 <script>
 import "./style.scss";
 import getTracks from "@/graphql/queries/track/getTracks.gql";
+import tabs from "@/content/tabs";
 export default {
-  layout: "chart",
+  layout: "main",
   data() {
     return {
       tracks: [],
       filters: {
         loading: false,
       },
+      tabs,
     };
   },
   async fetch() {

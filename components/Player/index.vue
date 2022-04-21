@@ -1,5 +1,5 @@
 <template>
-  <div class="player" v-show="ActivePlayer.imgUrl">
+  <div class="player" v-if="ActivePlayer.imgUrl">
     <div class="player-seection-track">
       <div class="image-track">
         <nuxt-link :to="`/track/${ActivePlayer.idPlayer}`">
@@ -26,7 +26,7 @@
         <span class="volume-player">
           <i class="fa-solid fa-volume-high"></i>
         </span>
-        
+
         <!-- <div class="box-volume">
           <div class="progress-bar">
             <div class="progress-bar-wrapper">
@@ -38,7 +38,7 @@
           </div>
         </div> -->
       </div>
-      <span class="list-player ml-15">
+      <span class="list-player ml-15" @click="$emit('showList')">
         <i class="fa-solid fa-bars"></i>
       </span>
     </div>
@@ -46,7 +46,10 @@
       <span class="player-time-duration pl-20">
         {{ ActivePlayer.audioDuration | convertTimeAudio }}
       </span>
-      <div class="prev-player text-center flex-grow">
+      <div
+        class="prev-player text-center flex-grow cursor-pointer"
+        @click="prevPlayer"
+      >
         <i class="fa-solid fa-backward-step text-18"></i>
       </div>
       <div class="play">
@@ -57,7 +60,10 @@
           <i class="fa-solid fa-pause"></i>
         </span>
       </div>
-      <div class="next-player text-center flex-grow">
+      <div
+        class="next-player text-center flex-grow cursor-pointer"
+        @click="nextPlayer"
+      >
         <i class="fa-solid fa-backward-step text-18"></i>
       </div>
       <span class="pr-20">
@@ -86,6 +92,7 @@ export default {
     ...mapGetters({
       audioPlayer: "player/getAudio",
       ActivePlayer: "player/getActivePlayer",
+      lists: "player/getLists",
     }),
     progressPlayerAudio() {
       return {
@@ -137,13 +144,51 @@ export default {
         });
       }
     },
-    chnagevolume(e) {
-      const { value } = e.target;
-      this.vloumeSize = value;
+    prevPlayer() {
+      const indexItem = this.lists.findIndex(
+        (list) => list._id === this.ActivePlayer.idPlayer
+      );
+      if (indexItem > -1) {
+        let item = {};
+        if (indexItem === 0) {
+          item = this.lists[this.lists.length - 1];
+        } else {
+          item = this.lists[indexItem - 1];
+        }
+        this.$store.commit("player/setActivePlayer", item);
+        this.audioPlayer.src = this.getAudioUrl(item.audioUrl);
+      }
+      if (this.ActivePlayer.playing) {
+        this.$store.commit("player/setChangeStatusPlaying", true);
+        this.audioPlayer.play();
+      }
+    },
+    nextPlayer() {
+      let indexItem = this.lists.findIndex(
+        (list) => list._id === this.ActivePlayer.idPlayer
+      );
+      if (indexItem > -1) {
+        let item = {};
+        if (this.lists.length === indexItem + 1) {
+          indexItem = 0;
+          item = this.lists[indexItem];
+        } else {
+          item = this.lists[indexItem + 1];
+        }
+        this.$store.commit("player/setActivePlayer", item);
+        this.audioPlayer.src = this.getAudioUrl(item.audioUrl);
+      }
+      if (this.ActivePlayer.playing) {
+        this.$store.commit("player/setChangeStatusPlaying", true);
+        this.audioPlayer.play();
+      }
     },
   },
   destroyed() {
-    if (this.$nuxt?.nuxt?.err?.statusCode === 404) {
+    if (
+      this.$nuxt?.nuxt?.err?.statusCode === 404 ||
+      this.$nuxt?.nuxt?.err?.statusCode === 500
+    ) {
       this.$store.commit("player/setChangeStatusPlaying", false);
       this.audioPlayer.pause();
       this.$store.commit("player/resetActivePlayer");

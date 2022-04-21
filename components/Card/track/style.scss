@@ -22,9 +22,15 @@
         background-color: rgba(255, 255, 255, 0.07);
         display: inline-block;
         flex-shrink: 0;
+        transition: all 0.4s ease-in-out;
         &.play-track-active {
             background: #fff;
             color: #202020;
+        }
+        &:not(.play-track-active):hover {
+            color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease-in-out;
         }
     }
     .track-info {
@@ -32,7 +38,14 @@
         .track-name {
             a {
                 &:hover {
-                    color: rgba(255,255,255,0.5);
+                    color: rgba(255, 255, 255, 0.5);
+                }
+            }
+        }
+        .artists {
+            a {
+                &:hover {
+                    text-decoration: underline;
                 }
             }
         }

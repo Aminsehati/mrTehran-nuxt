@@ -4,9 +4,16 @@ query getTrack($id:ID!) {
     imgUrl
     audioUrl
     trackName
-   	view
+    view
     like
     artists {
+      _id
+      name
+      imgUrl
+      coverImgUrl
+      Followers
+    }
+    playlists {
       _id
       name
       imgUrl

@@ -124,6 +124,7 @@ export default {
         this.$store.commit("player/setActivePlayer", track);
         this.audioPlayer.src = this.getAudioUrl(track.audioUrl);
         await this.viewTrack();
+        this.$store.commit("player/addToPlayerLists", track);
       }
       this.$store.commit("player/setChangeStatusPlaying", true);
       this.audioPlayer.play();

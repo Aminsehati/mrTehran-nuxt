@@ -6,18 +6,18 @@
       </nuxt-link>
     </div>
     <div class="content px-15">
-      <nuxt-link :to="`/track/${trackInfo._id}`" class="text-white">
+      <nuxt-link :to="`/track/${trackInfo._id}`" class="text-white track-name">
         {{ trackInfo.trackName }}
       </nuxt-link>
-      <div>
+      <div class="mt-5 artists">
         <nuxt-link
-          v-for="(item, index) in trackInfo.actors"
-          :key="item._id"
-          :to="`/artist/${item._id}`"
-          class="text-light"
+          v-for="(artist, index) in trackInfo.artists"
+          :key="artist._id"
+          :to="`/artist/${artist._id}`"
+          class="text-light text-13"
         >
-          {{ item.name }}
-          {{ trackInfo.actors.length === index + 1 ? "" : "&" }}
+          {{ artist.name }}
+          {{ trackInfo.artists.length === index + 1 ? "" : "&" }}
         </nuxt-link>
       </div>
     </div>
@@ -67,10 +67,12 @@ export default {
   },
   methods: {
     async playTrack(track) {
+      this.audioPlayer.pause();
       if (track._id !== this.activePlayer.idPlayer) {
         this.$store.commit("player/setActivePlayer", track);
         this.audioPlayer.src = this.getAudioUrl(track.audioUrl);
         await this.viewTrack();
+        this.$store.commit("player/addToPlayerLists", track);
       }
       this.$store.commit("player/setChangeStatusPlaying", true);
       this.audioPlayer.play();

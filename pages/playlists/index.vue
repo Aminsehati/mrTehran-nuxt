@@ -1,5 +1,5 @@
 <template>
-  <div class="playlist-page">
+  <div class="playlists-page">
     <div class="container-sm">
       <Title class="mb-20"> Exclusive Playlists </Title>
       <div

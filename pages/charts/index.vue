@@ -1,5 +1,8 @@
 <template>
   <div class="chart-top-song-week-page">
+    <div class="container-sm">
+      <Tabs :tabs="tabs" />
+    </div>
     <div class="container-sm" v-show="!filters.loading">
       <div class="title mb-20">
         <Title> Top Songs Week </Title>
@@ -23,14 +26,16 @@
 <script>
 import getTracks from "@/graphql/queries/track/getTracks.gql";
 import "./style.scss";
+import tabs from "@/content/tabs";
 export default {
-  layout: "chart",
+  layout: "main",
   data() {
     return {
       tracks: [],
       filters: {
         loading: false,
       },
+      tabs,
     };
   },
   async fetch() {
@@ -68,15 +73,15 @@ export default {
         return `0${index + 1}`;
       }
     },
-    async viewTrack(){
+    async viewTrack() {
       await this.getTopTracks();
-    }
+    },
   },
-  head(){
+  head() {
     return {
-      title:"Top Songs Week Chart | MrTehran.com"
-    }
-  }
+      title: "Top Songs Week Chart | MrTehran.com",
+    };
+  },
 };
 </script>
 
