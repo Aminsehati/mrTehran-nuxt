@@ -1,3 +1,4 @@
+import { uniqBy } from 'lodash'
 export const state = () => ({
   audio: "",
   ActivePlayer: {
@@ -7,7 +8,9 @@ export const state = () => ({
     imgUrl: "",
     playing: false,
     trackName: "",
-    artists: []
+    artists: [],
+    hasAlbum: false,
+    albumID: ""
   },
   lists: []
 })
@@ -33,7 +36,9 @@ export const mutations = {
       artists: item?.artists || [],
       trackName: item?.trackName || "",
       imgUrl: item?.imgUrl || "",
-      idPlayer: item?._id || ""
+      idPlayer: item?._id || "",
+      hasAlbum: item?.hasAlbum || false,
+      albumID: item?.hasAlbum ? item.albumID : ""
     }
   },
   resetActivePlayer(state) {
@@ -67,6 +72,13 @@ export const mutations = {
       state.ActivePlayer.playing = true;
       state.audio.play();
     }
+  },
+  setListsPlayer(state, items) {
+    const data = [...state.lists, ...items];
+    const item = uniqBy(data, function (e) {
+      return e._id;
+    });
+    state.lists = item ;
   }
 }
 export const getters = {

@@ -2,12 +2,12 @@
   <div class="player" v-if="ActivePlayer.imgUrl">
     <div class="player-seection-track">
       <div class="image-track">
-        <nuxt-link :to="`/track/${ActivePlayer.idPlayer}`">
+        <nuxt-link :to="trackLink()">
           <img :src="getImageUrl(ActivePlayer.imgUrl)" />
         </nuxt-link>
       </div>
       <div class="detail-track pl-15">
-        <nuxt-link :to="`/track/${ActivePlayer.idPlayer}`">
+        <nuxt-link :to="trackLink()">
           {{ ActivePlayer.trackName }}
         </nuxt-link>
         <div>
@@ -181,6 +181,13 @@ export default {
       if (this.ActivePlayer.playing) {
         this.$store.commit("player/setChangeStatusPlaying", true);
         this.audioPlayer.play();
+      }
+    },
+    trackLink() {
+      if (!this.ActivePlayer.hasAlbum) {
+        return `/track/${this.ActivePlayer.idPlayer}`;
+      } else {
+        return `/album/${this.ActivePlayer.albumID}`;
       }
     },
   },

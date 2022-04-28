@@ -2,7 +2,7 @@
   "name": "mrtehran-front",
   "version": "1.0.0",
   "private": true,
-  "scripts": { 
+  "scripts": {
     "dev": "nuxt -p 8080",
     "build": "nuxt build",
     "start": "nuxt start",
@@ -16,6 +16,7 @@
     "@nuxtjs/pwa": "^3.3.5",
     "core-js": "^3.15.1",
     "jalali-moment": "^3.3.11",
+    "lodash": "^4.17.21",
     "nuxt": "^2.15.7",
     "vercel": "^23.1.2",
     "vue-pagination-2": "^3.0.91",

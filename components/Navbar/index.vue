@@ -3,17 +3,37 @@
     <div class="container-sm">
       <ul class="list_navbar flex align-center">
         <li v-for="navbar in navbarItems" :key="navbar.id" class="navbar_item">
-          <nuxt-link
-            :to="navbar.path"
-            :class="['text-13 text-light text-400']"
-          >
-          <i :class="navbar.className"></i>
-          <i class="fa-regular fa-house-blank"></i>
+          <nuxt-link :to="navbar.path" :class="['text-13 text-light text-400']">
+            <IconBrowse
+              v-if="navbar.name === 'Browse'"
+              width="15"
+              height="15"
+              class="mr-10"
+            />
+            <IconHome
+              v-if="navbar.name === 'Home'"
+              width="15"
+              height="15"
+              class="mr-10"
+            />
+            <IconArtist
+              v-if="navbar.name === 'Artists'"
+              width="18"
+              height="18"
+              class="mr-10"
+            />
+            <IconPlayList
+              v-if="navbar.name === 'Playlists'"
+              width="15"
+              height="15"
+              class="mr-10"
+            />
+
             {{ navbar.name }}
           </nuxt-link>
         </li>
         <li :class="['navbar_item text-light']" @click="$emit('onSearch')">
-          <i class="fa-solid fa-magnifying-glass"></i>
+          <IconSearch width="15" height="15" />
           Search
         </li>
       </ul>
@@ -29,6 +49,11 @@ export default {
     return {
       navbarItems: items,
     };
+  },
+  methods: {
+    iconNavbar(value) {
+      return value;
+    },
   },
 };
 </script>

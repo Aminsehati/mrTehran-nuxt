@@ -25,9 +25,6 @@ export default {
       showSidebarPlayerLists: false,
     };
   },
-  mounted() {
-    console.log(this.$route.fullPath === "/");
-  },
 };
 </script>
 

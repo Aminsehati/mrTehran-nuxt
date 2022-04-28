@@ -34,14 +34,34 @@
         </div>
       </div>
       <Banner class="mb-30" />
-      <div class="best-of-month mb-30">
+      <div class="new-albums mb-30" ref="newAlbums">
+        <div class="container-sm">
+          <div class="mb-20 flex justify-between items-center">
+            <Title> New Albums</Title>
+          </div>
+          <div class="grid grid-cols-4 gap-x-15 gap-y-20">
+            <AlbumItem
+              v-for="album in newAlbums"
+              :key="album._id"
+              :albumInfo="album"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="best-of-month mb-30" ref="bestTracks">
         <div class="container-sm">
           <div class="mb-20 flex justify-between items-center">
             <Title> Best of Month </Title>
-            <nuxt-link to="/browse/popular" class="text-white">
-              See All
-              <i class="fa-solid fa-chevron-right ml-10 text-12"></i>
-            </nuxt-link>
+            <div class="flex items-center">
+              <Button class="mr-15" secondary @onClick="playAllBestTracks">
+                <i class="fa-solid fa-play mr-10"></i>
+                Play All
+              </Button>
+              <nuxt-link to="/browse/popular" class="text-white">
+                See All
+                <i class="fa-solid fa-chevron-right ml-10 text-12"></i>
+              </nuxt-link>
+            </div>
           </div>
           <div class="grid xl:grid-cols-3 sm:grid-cols-2 gap-x-20 gap-y-20">
             <TrackItem
@@ -56,10 +76,12 @@
         <div class="container-sm">
           <div class="mb-20 flex justify-between items-center">
             <Title> Top Playlists </Title>
-            <nuxt-link to="/artists" class="text-white">
-              See All
-              <i class="fa-solid fa-chevron-right ml-10 text-12"></i>
-            </nuxt-link>
+            <div>
+              <nuxt-link to="/artists" class="text-white">
+                See All
+                <i class="fa-solid fa-chevron-right ml-10 text-12"></i>
+              </nuxt-link>
+            </div>
           </div>
           <div class="grid xl:grid-cols-3 sm:grid-cols-2 gap-x-20 gap-y-20">
             <PlayListItem
@@ -105,6 +127,7 @@ import "./style.scss";
 import getPlayList from "@/graphql/queries/playList/getPlayLists.gql";
 import getArtists from "@/graphql/queries/artist/getArtists.gql";
 import getTracks from "@/graphql/queries/track/getTracks.gql";
+import getAlbums from "@/graphql/queries/album/getAlbums.gql";
 export default {
   layout: "main",
   data() {
@@ -113,6 +136,7 @@ export default {
       listActors: [],
       listTracksBestInMonth: [],
       listTracksRecentlyAdded: [],
+      newAlbums: [],
       filters: {
         loading: false,
       },
@@ -120,7 +144,6 @@ export default {
   },
   async fetch() {
     await this.getlistTracksRecentlyAdded();
-    await this.getListTracksInMonths();
   },
   mounted() {
     window.addEventListener("scroll", this.onscroll);
@@ -205,6 +228,8 @@ export default {
     async onscroll() {
       const topArtist = this.$refs.topArtist;
       const topPlayList = this.$refs.topPlayList;
+      const bestTracks = this.$refs.bestTracks;
+      const newAlbums = this.$refs.newAlbums;
       if (topArtist) {
         const marginTopArtist = topArtist.getBoundingClientRect().top;
         const innerHeight = window.innerHeight;
@@ -219,6 +244,34 @@ export default {
           await this.getlistPlaylist();
         }
       }
+      if (bestTracks) {
+        const marginBestTracks = bestTracks.getBoundingClientRect().top;
+        const innerHeightTopArtist = window.innerHeight;
+        if (marginBestTracks - innerHeightTopArtist < -50) {
+          await this.getListTracksInMonths();
+        }
+      }
+      if (newAlbums) {
+        const marginNewAlbums = newAlbums.getBoundingClientRect().top;
+        const innerHeightTopArtist = window.innerHeight;
+        if (marginNewAlbums - innerHeightTopArtist < -50) {
+          await this.getNewAlbums();
+        }
+      }
+    },
+    async getNewAlbums() {
+      try {
+        const httpResponse = await this.$apollo.query({
+          query: getAlbums,
+        });
+        const data = httpResponse?.data?.getAlbums || [];
+        this.newAlbums = data;
+      } catch (error) {
+        ////
+      }
+    },
+    playAllBestTracks() {
+      this.$store.commit("player/setListsPlayer", this.listTracksBestInMonth);
     },
   },
 };

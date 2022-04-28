@@ -1,0 +1,21 @@
+query getAlbums($pagination:Pagination) {
+  getAlbums(pagination:$pagination) {
+    _id
+    name
+    imgUrl
+    artists {
+      _id
+      name
+      imgUrl
+      coverImgUrl
+      Followers
+    }
+    tracks {
+      _id
+      trackName
+      audioUrl
+      view
+      like
+    }
+  }
+}
