@@ -5,7 +5,7 @@
         <Loading />
       </div>
       <div v-else-if="filters.loading === false">
-        <CoverTrack :trackInfo="trackItem" @like="likeTrack" ref="track"/>
+        <CoverTrack :trackInfo="trackItem" @like="likeTrack" ref="track" />
       </div>
     </div>
   </div>
@@ -24,7 +24,7 @@ export default {
         trackName: "",
         audioUrl: "",
         view: 0,
-        like:0,
+        like: 0,
         artists: [],
         createdAt: "",
       },
@@ -61,7 +61,7 @@ export default {
         };
         this.filters.loading = false;
       } catch (error) {
-        //////
+        return this.$nuxt.error({ statusCode: 404, message: error.message });
       } finally {
         this.filters.loading = false;
       }
@@ -75,9 +75,9 @@ export default {
           },
         });
         const data = httpResponse.data.likeTrack;
-        this.trackItem.like = data?.like || 0 ;
+        this.trackItem.like = data?.like || 0;
         const refComponent = this.$refs.track;
-        refComponent.hasLiked = true ;
+        refComponent.hasLiked = true;
       } catch (error) {
         ////
       }

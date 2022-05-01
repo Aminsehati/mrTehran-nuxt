@@ -10,12 +10,5 @@ query getAlbums($pagination:Pagination) {
       coverImgUrl
       Followers
     }
-    tracks {
-      _id
-      trackName
-      audioUrl
-      view
-      like
-    }
   }
 }

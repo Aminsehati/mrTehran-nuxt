@@ -61,6 +61,7 @@ export default {
         };
         this.filters.loading = false;
       } catch (error) {
+        return this.$nuxt.error({ statusCode: 404, message: error.message });
       } finally {
         this.filters.loading = false;
       }

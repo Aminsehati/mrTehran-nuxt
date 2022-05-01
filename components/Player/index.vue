@@ -187,7 +187,7 @@ export default {
       if (!this.ActivePlayer.hasAlbum) {
         return `/track/${this.ActivePlayer.idPlayer}`;
       } else {
-        return `/album/${this.ActivePlayer.albumID}`;
+        return `/album/${this.ActivePlayer.albumID}/${this.ActivePlayer.idPlayer}`;
       }
     },
   },

@@ -21,8 +21,9 @@
       >
         <TrackItem
           :trackInfo="track"
-          v-for="track in albumInfo.tracks"
+          v-for="track in tracks"
           :key="track._id"
+          hasAlbum
         />
       </div>
     </div>
@@ -30,8 +31,9 @@
 </template>
 
 <script>
-import "./style.scss";
+import "../style.scss";
 import getAlbum from "@/graphql/queries/album/getAlbum.gql";
+import getTracksAlbum from "@/graphql/queries/TrackAlbum/getTracksAlbum.gql";
 export default {
   layout: "main",
   data() {
@@ -41,8 +43,8 @@ export default {
         name: "",
         imgUrl: "",
         artists: [],
-        tracks: [],
       },
+      tracks: [],
     };
   },
   methods: {
@@ -57,28 +59,47 @@ export default {
         });
         const data = httpResponse?.data?.getAlbum;
         this.albumInfo = {
+          ...this.albumInfo,
           name: data?.name || "",
-          tracks: data?.tracks.map((track) => {
-            return {
-              ...track,
-              imgUrl: data?.imgUrl || "",
-              artists: data?.artists || [],
-              hasAlbum: true,
-              albumID: data?._id || "",
-            };
-          }),
+          imgUrl: data?.imgUrl || "",
+          artists: data?.artists || [],
         };
-        console.log(this.albumInfo);
       } catch (error) {
-        ///
+        ////
       }
     },
     playTracksAlbum() {
-      this.$store.commit("player/setListsPlayer", this.albumInfo.tracks);
+      this.$store.commit("player/setListsPlayer", this.tracks);
+    },
+    async getTracksAlbum() {
+      try {
+        const { albumID } = this.$route.params;
+        const httpRequest = await this.$apollo.query({
+          query: getTracksAlbum,
+          variables: {
+            filter: {
+              albumID,
+            },
+          },
+        });
+        const data = httpRequest?.data?.getTracksAlbum || [];
+        this.tracks = data.map((item) => {
+          return {
+            ...item,
+            artists: this.albumInfo?.artists || [],
+            name: this.albumInfo?.name || "",
+            imgUrl: this.albumInfo?.imgUrl || "",
+            hasAlbum: true,
+          };
+        });
+      } catch (error) {
+        /////
+      }
     },
   },
   async fetch() {
     await this.getAlbum();
+    await this.getTracksAlbum();
   },
 };
 </script>

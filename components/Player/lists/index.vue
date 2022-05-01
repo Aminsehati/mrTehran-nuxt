@@ -37,7 +37,10 @@
           </div>
         </div>
         <div class="flex items-center">
-          <span class="delete-track mr-15 cursor-pointer">
+          <span
+            class="delete-track mr-15 cursor-pointer"
+            @click="deleteTrackAlbum(list)"
+          >
             <i class="fa-solid fa-trash text-12"></i>
           </span>
           <span
@@ -90,7 +93,6 @@ export default {
   },
   methods: {
     async playTrack(track) {
-      console.log(track._id !== this.activePlayer.idPlayer);
       if (track._id !== this.activePlayer.idPlayer) {
         this.$store.commit("player/setActivePlayer", track);
         this.audioPlayer.src = this.getAudioUrl(track.audioUrl);
@@ -115,6 +117,11 @@ export default {
     pauseTrack() {
       this.$store.commit("player/setChangeStatusPlaying", false);
       this.audioPlayer.pause();
+    },
+    deleteTrackAlbum(item) {
+      if (item._id !== this.activePlayer.idPlayer) {
+        this.$store.commit("player/deletePlayList", item);
+      }
     },
   },
 };

@@ -15,9 +15,6 @@ export const state = () => ({
   lists: []
 })
 export const mutations = {
-  setActivePlayer(state, item) {
-    state.audio = item;
-  },
   setAudio(state, item) {
     state.audio = item
   },
@@ -78,7 +75,14 @@ export const mutations = {
     const item = uniqBy(data, function (e) {
       return e._id;
     });
-    state.lists = item ;
+    state.lists = item;
+  },
+  deletePlayList(state, item) {
+    const indexItem = state.lists.findIndex(list => list._id === item._id);
+    const stateLists = state.lists;
+    if (indexItem > -1) {
+      const newItem = stateLists.splice(indexItem, 1);
+    }
   }
 }
 export const getters = {

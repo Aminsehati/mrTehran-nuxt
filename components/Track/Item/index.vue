@@ -1,12 +1,12 @@
 <template>
   <div class="track-item">
     <div class="image">
-      <nuxt-link :to="`/track/${trackInfo._id}`">
+      <nuxt-link :to="linkTrack()">
         <img :src="getImageUrl(trackInfo.imgUrl)" />
       </nuxt-link>
     </div>
     <div class="content px-15">
-      <nuxt-link :to="`/track/${trackInfo._id}`" class="text-white track-name">
+      <nuxt-link :to="linkTrack()" class="text-white track-name">
         {{ trackInfo.trackName }}
       </nuxt-link>
       <div class="mt-5 artists">
@@ -58,6 +58,10 @@ export default {
         return {};
       },
     },
+    hasAlbum: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     ...mapGetters({
@@ -92,6 +96,13 @@ export default {
         });
       } catch (error) {
         //////
+      }
+    },
+    linkTrack() {
+      if (this.hasAlbum) {
+        return `/album/${this.trackInfo.albumID}/${this.trackInfo._id}`;
+      } else {
+        return `/track/${this.trackInfo._id}`;
       }
     },
   },

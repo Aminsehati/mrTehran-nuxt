@@ -8,10 +8,16 @@
             class="title-recently-added mb-20 flex justify-between items-center"
           >
             <Title> Recently Added </Title>
-            <nuxt-link to="/browse/latest" class="text-white">
-              See All
-              <i class="fa-solid fa-chevron-right ml-10 text-12"></i>
-            </nuxt-link>
+            <div class="flex items-center">
+              <Button class="mr-15" secondary>
+                <i class="fa-solid fa-play mr-10"></i>
+                Play All
+              </Button>
+              <nuxt-link to="/browse/latest" class="text-white">
+                See All
+                <i class="fa-solid fa-chevron-right ml-10 text-12"></i>
+              </nuxt-link>
+            </div>
           </div>
           <div
             class="

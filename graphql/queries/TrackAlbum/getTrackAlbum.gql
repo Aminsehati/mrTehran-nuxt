@@ -1,0 +1,12 @@
+query getTrackAlbum($id:ID!) {
+  getTrackAlbum(id:$id) {
+    _id
+    albumID
+    trackName
+    audioUrl
+    view
+    like
+    createdAt
+    updatedAt
+  }
+}
