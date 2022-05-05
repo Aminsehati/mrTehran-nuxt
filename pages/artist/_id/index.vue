@@ -4,7 +4,7 @@
       <Loading v-if="filters.loading" />
       <div v-else>
         <CoverArtist :ArtistInfo="ArtistInfo" @follow="followArtist" />
-        <div class="title_ mb-30">
+        <div class="title_ mb-15">
           <Title> All Tracks </Title>
         </div>
         <div
@@ -22,15 +22,35 @@
             :key="track.id"
           />
         </div>
+        <div class="title_ mt-30 mb-15">
+          <Title> All Albums </Title>
+        </div>
+        <div class="tracks-albums">
+          <div
+            class="
+              tracks-wrapper
+              grid grid
+              xl:grid-cols-3
+              sm:grid-cols-2
+              gap-x-20 gap-y-20
+            "
+          >
+            <TrackItem
+              :trackInfo="track"
+              v-for="track in tracksAlbums"
+              :key="track._id"
+            />
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import getArtist from "@/graphql/queries/artist/getArtist.gql";
-import getTracks from "@/graphql/queries/track/getTracks.gql";
-import FollowArtist from "@/graphql/mutations/artist/FollowArtist.gql";
+import ArtistService from "@/service/Artist";
+import TrackService from '@/service/Track';
+import TrackAlbumService from '@/service/TrackAlbum'
 import "./style.scss";
 export default {
   layout: "main",
@@ -45,29 +65,27 @@ export default {
         loading: false,
       },
       listTracks: [],
+      tracksAlbums: [],
     };
   },
   async fetch() {
     await this.getArtist();
     await this.getListTracks();
+    await this.getListTracksAlbum();
   },
   methods: {
     async getArtist() {
       this.filters.loading = true;
       try {
         const { id } = this.$route.params;
-        const httpResponse = await this.$apollo.query({
-          query: getArtist,
-          variables: {
-            id,
-          },
-        });
-        const data = httpResponse.data.getArtist;
+        this.filters.loading = false;
+        const httpRequest = await ArtistService.getArtist(id);
+        const httpResponse = httpRequest.getArtist;
         this.ArtistInfo = {
           ...this.ArtistInfo,
-          name: data?.name,
-          coverImage: this.getImageUrl(data.coverImgUrl),
-          countFollowers: data?.Followers || 0,
+          name: httpResponse?.name,
+          coverImage: this.getImageUrl(httpResponse.coverImgUrl),
+          countFollowers: httpResponse?.Followers || 0,
         };
         this.filters.loading = false;
       } catch (error) {
@@ -79,18 +97,21 @@ export default {
     async getListTracks() {
       const { id } = this.$route.params;
       try {
-        const httpResponse = await this.$apollo.query({
-          query: getTracks,
-          variables: {
-            filter: {
-              artistID: id,
-            },
-          },
-        });
-        const data = httpResponse.data.getTracks;
-        this.listTracks = data;
+        const filter = {
+          artistID: id,
+        }
+        const httpRequest = await TrackService.getTracks({filter});
+        const httpResponse = httpRequest.getTracks ;
+        this.listTracks = httpResponse;
       } catch (error) {
         //////
+      }
+    },
+    async getListTracksAlbum() {
+      try {
+        
+      } catch (error) {
+        console.log(error);
       }
     },
     async followArtist() {
@@ -113,11 +134,11 @@ export default {
       }
     },
   },
-  head(){
+  head() {
     return {
-      title:`${this.ArtistInfo.name} | MrTehran.com`
-    }
-  }
+      title: `${this.ArtistInfo.name} | MrTehran.com`,
+    };
+  },
 };
 </script>
 

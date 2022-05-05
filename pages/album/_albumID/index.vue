@@ -32,8 +32,8 @@
 
 <script>
 import "../style.scss";
-import getAlbum from "@/graphql/queries/album/getAlbum.gql";
-import getTracksAlbum from "@/graphql/queries/TrackAlbum/getTracksAlbum.gql";
+import TrackAlbumService from "@/service/TrackAlbum";
+import AlbumService from '@/service/Album'
 export default {
   layout: "main",
   data() {
@@ -51,18 +51,13 @@ export default {
     async getAlbum() {
       try {
         const id = this.$route.params.albumID;
-        const httpResponse = await this.$apollo.query({
-          query: getAlbum,
-          variables: {
-            id,
-          },
-        });
-        const data = httpResponse?.data?.getAlbum;
+        const httpRequest = await AlbumService.getAlbum(id);
+        const httpResponse = httpRequest.getAlbum ;
         this.albumInfo = {
           ...this.albumInfo,
-          name: data?.name || "",
-          imgUrl: data?.imgUrl || "",
-          artists: data?.artists || [],
+          name: httpResponse?.name || "",
+          imgUrl: httpResponse?.imgUrl || "",
+          artists: httpResponse?.artists || [],
         };
       } catch (error) {
         ////
@@ -74,16 +69,18 @@ export default {
     async getTracksAlbum() {
       try {
         const { albumID } = this.$route.params;
-        const httpRequest = await this.$apollo.query({
-          query: getTracksAlbum,
-          variables: {
-            filter: {
-              albumID,
-            },
-          },
+        const pagination = {};
+        const filter = {
+          albumID,
+        };
+        const sort = {};
+        const httpRequest = await TrackAlbumService.getTracksAlbum({
+          pagination,
+          sort,
+          filter,
         });
-        const data = httpRequest?.data?.getTracksAlbum || [];
-        this.tracks = data.map((item) => {
+        const httpResponse = httpRequest.getTracksAlbum ;
+        this.tracks = httpResponse.map((item) => {
           return {
             ...item,
             artists: this.albumInfo?.artists || [],

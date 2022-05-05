@@ -1,5 +1,9 @@
-query getTrack($id:ID!) {
-  getTrack(id:$id) {
+import {
+    gql
+} from "@apollo/client";
+export default gql`
+mutation likeTrack($id:ID!) {
+  likeTrack(id:$id) {
     _id
     imgUrl
     audioUrl
@@ -12,15 +16,11 @@ query getTrack($id:ID!) {
       imgUrl
       coverImgUrl
       Followers
-    }
-    playlists {
-      _id
-      name
-      imgUrl
-      coverImgUrl
-      Followers
+      createdAt
+      updatedAt
     }
     createdAt
     updatedAt
   }
 }
+`

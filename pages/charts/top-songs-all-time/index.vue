@@ -26,8 +26,8 @@
 </template>
 <script>
 import "./style.scss";
-import getTracks from "@/graphql/queries/track/getTracks.gql";
-import tabs from '@/content/tabs'
+import tabs from "@/content/tabs";
+import TrackService from "@/service/Track";
 export default {
   layout: "main",
   data() {
@@ -36,7 +36,7 @@ export default {
       filters: {
         loading: false,
       },
-      tabs
+      tabs,
     };
   },
   async fetch() {
@@ -44,22 +44,19 @@ export default {
   },
   methods: {
     async getTopTracksInAllTime() {
+      this.filters.loading = true;
       try {
-        this.filters.loading = true;
-        const httpResponse = await this.$apollo.query({
-          query: getTracks,
-          variables: {
-            pagination: {
-              limit: 100,
-              skip: 1,
-            },
-            sort: {
-              view: -1,
-            },
-          },
-        });
-        const data = httpResponse?.data?.getTracks || [];
-        this.tracks = data;
+        const pagination = {
+          limit: 100,
+          skip: 1,
+        };
+        const sort = {
+          view: -1,
+        };
+        const filter = {}
+        const httpRequest = TrackService.getTracks({ pagination, sort ,filter});
+        const httpResponse = httpRequest.getTracks ;
+        this.tracks = httpResponse;
         this.filters.loading = false;
       } catch (error) {
       } finally {

@@ -32,8 +32,7 @@
 
 <script>
 import "./style.scss";
-import getArtists from "@/graphql/queries/artist/getArtists.gql";
-import getArtistsCount from "@/graphql/queries/artist/getArtistsCount.gql";
+import ArtistService from "@/service/Artist";
 export default {
   layout: "main",
   data() {
@@ -55,17 +54,13 @@ export default {
     async getlistArtist() {
       this.filters.loading = true;
       try {
-        const httpResponse = await this.$apollo.query({
-          query: getArtists,
-          variables: {
-            pagination: {
-              limit: this.filters.limit,
-              skip: this.filters.skip,
-            },
-          },
-        });
-        const data = httpResponse.data.getArtists;
-        this.listArtists = data;
+        const pagination = {
+          limit: this.filters.limit,
+          skip: this.filters.skip,
+        };
+        const httpRequest = await ArtistService.getArtists({ pagination });
+        const httpResponse = httpRequest.getArtists ;
+        this.listArtists = httpResponse;
         this.filters.loading = false;
       } catch (error) {
         /////
@@ -75,11 +70,9 @@ export default {
     },
     async getActorsCount() {
       try {
-        const httpResponse = await this.$apollo.query({
-          query: getArtistsCount,
-        });
-        const data = httpResponse?.data?.getArtistsCount || 0;
-        this.filters.tottalCount = data;
+        const httpRequest = await ArtistService.getArtistsCount();
+        const httpResponse = httpRequest?.getArtistsCount || 0
+        this.filters.tottalCount = httpResponse;
       } catch (error) {
         ///
       }

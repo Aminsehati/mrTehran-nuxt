@@ -28,9 +28,8 @@
 </template>
 <script>
 import "../../style.scss";
-import getTrackAlbum from "@/graphql/queries/TrackAlbum/getTrackAlbum.gql";
-import getAlbum from "@/graphql/queries/album/getAlbum.gql";
-import getTracksAlbum from "@/graphql/queries/TrackAlbum/getTracksAlbum.gql";
+import AlbumService from "@/service/Album";
+import TrackAlbumService from "@/service/TrackAlbum";
 export default {
   layout: "main",
   data() {
@@ -59,13 +58,8 @@ export default {
     async getTrackAlbum() {
       try {
         const { trackID } = this.$route.params;
-        const httpRequest = await this.$apollo.query({
-          query: getTrackAlbum,
-          variables: {
-            id: trackID,
-          },
-        });
-        const httpResponse = httpRequest.data.getTrackAlbum;
+        const httpRequest = await TrackAlbumService.getTrackAlbum(trackID);
+        const httpResponse = httpRequest.getTrackAlbum;
         this.trackItem = {
           ...this.trackItem,
           trackName: httpResponse?.trackName || "",
@@ -83,13 +77,8 @@ export default {
     async getAlbum() {
       try {
         const id = this.$route.params.albumID;
-        const httpRequest = await this.$apollo.query({
-          query: getAlbum,
-          variables: {
-            id,
-          },
-        });
-        const httpResponse = httpRequest.data.getAlbum;
+        const httpRequest = await AlbumService.getAlbum(id);
+        const httpResponse = httpRequest.getAlbum;
         this.trackItem = {
           ...this.trackItem,
           imgUrl: httpResponse?.imgUrl || "",
@@ -102,15 +91,17 @@ export default {
     async getTracksAlbum() {
       try {
         const { albumID } = this.$route.params;
-        const httpRequest = await this.$apollo.query({
-          query: getTracksAlbum,
-          variables: {
-            filter: {
-              albumID,
-            },
-          },
+        const filter = {
+          albumID,
+        };
+        const sort = {};
+        const pagination = {};
+        const httpRequest = await TrackAlbumService.getTracksAlbum({
+          pagination,
+          sort,
+          filter,
         });
-        const httpResponse = httpRequest?.data?.getTracksAlbum || [];
+        const httpResponse = httpRequest?.getTracksAlbum || [];
         const data = httpResponse.map((track) => {
           return {
             ...track,

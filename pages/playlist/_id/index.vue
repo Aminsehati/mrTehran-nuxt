@@ -19,9 +19,8 @@
 
 <script>
 import "./style.scss";
-import getPlayList from "@/graphql/queries/playList/getPlayList.gql";
-import FollowPlayList from "@/graphql/mutations/playList/FollowPlayList.gql";
-import getTracks from "@/graphql/queries/track/getTracks.gql";
+import PlayListService from "@/service/PlayList";
+import TrackService from "@/service/Track";
 export default {
   layout: "main",
   data() {
@@ -46,18 +45,13 @@ export default {
       try {
         this.filters.loading = true;
         const { id } = this.$route.params;
-        const httpResponse = await this.$apollo.query({
-          query: getPlayList,
-          variables: {
-            id,
-          },
-        });
-        const data = httpResponse.data.getPlayList;
+        const httpRequest = PlayListService.getPlayList(id);
+        const httpResponse = httpRequest.getPlayList;
         this.playListInfo = {
           ...this.playListInfo,
-          name: data?.name,
-          Followers: data?.Followers,
-          coverImage: this.getImageUrl(data?.coverImgUrl || ""),
+          name: httpResponse?.name,
+          Followers: httpResponse?.Followers,
+          coverImage: this.getImageUrl(httpResponse?.coverImgUrl || ""),
         };
         this.filters.loading = false;
       } catch (error) {
@@ -87,16 +81,16 @@ export default {
     },
     async getTracks() {
       try {
-        const httpResponse = await this.$apollo.query({
-          query: getTracks,
-          variables: {
-            filter: {
-              playlistID: this.$route.params.id,
-            },
-          },
+        const filter = {
+          playlistID: this.$route.params.id,
+        }
+        const httpRequest = await TrackService.getTracks({
+          pagination: {},
+          sort: {},
+          filter
         });
-        const data = httpResponse?.data?.getTracks || [];
-        this.tracks = data;
+        const httpResponse = httpRequest.getTracks ;
+        this.tracks = httpResponse;
       } catch (error) {
         ///
       }

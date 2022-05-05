@@ -49,7 +49,7 @@
 <script>
 import "./style.scss";
 import { mapGetters } from "vuex";
-import viewTrack from "@/graphql/mutations/track/viewTrack.gql";
+import TrackService from '@/service/Track'
 export default {
   props: {
     trackInfo: {
@@ -88,12 +88,7 @@ export default {
     async viewTrack() {
       try {
         const id = this.activePlayer.idPlayer;
-        await this.$apollo.mutate({
-          mutation: viewTrack,
-          variables: {
-            id,
-          },
-        });
+        await TrackService.viewTrack(id);
       } catch (error) {
         //////
       }

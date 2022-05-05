@@ -1,3 +1,7 @@
+import {
+    gql
+} from "@apollo/client";
+export default gql`
 mutation FollowArtist($id:ID!) {
   FollowArtist(id:$id) {
     _id
@@ -9,3 +13,4 @@ mutation FollowArtist($id:ID!) {
     updatedAt
   }
 }
+`

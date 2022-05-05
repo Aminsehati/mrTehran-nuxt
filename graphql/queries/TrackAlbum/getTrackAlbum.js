@@ -1,3 +1,7 @@
+import {
+    gql
+} from "@apollo/client";
+export default gql`
 query getTrackAlbum($id:ID!) {
   getTrackAlbum(id:$id) {
     _id
@@ -10,3 +14,4 @@ query getTrackAlbum($id:ID!) {
     updatedAt
   }
 }
+`

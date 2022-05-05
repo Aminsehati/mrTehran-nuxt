@@ -20,8 +20,7 @@
 
 <script>
 import "./style.scss";
-import getTracks from "@/graphql/queries/track/getTracks.gql";
-import getTracksCount from "@/graphql/queries/track/getTracksCount.gql";
+import TrackService from "@/service/Track";
 export default {
   layout: "main",
   data() {
@@ -69,28 +68,22 @@ export default {
   methods: {
     async getTrackItems() {
       try {
-        const httpResponse = await this.$apollo.query({
-          query: getTracks,
-          variables: {
-            pagination: {
-              limit: this.filters.limit,
-              skip: this.filters.skip,
-            },
-          },
-        });
-        const data = httpResponse.data.getTracks;
-        this.tracks = data;
+        const pagination = {
+          limit: this.filters.limit,
+          skip: this.filters.skip,
+        };
+        const httpRequest = await TrackService.getTracks({ pagination });
+        const httpResponse = httpRequest.getTracks;
+        this.tracks = httpResponse;
       } catch (error) {
         ////
       }
     },
     async getTracksCount() {
       try {
-        const httpResponse = await this.$apollo.query({
-          query: getTracksCount,
-        });
-        const data = httpResponse.data.getTracksCount;
-        this.filters.tottalCount = data;
+        const httpRequest = await TrackService.getTracksCount();
+        const httpResponse = httpRequest.getTracksCount;
+        this.filters.tottalCount = httpResponse;
       } catch (error) {
         ///
       }

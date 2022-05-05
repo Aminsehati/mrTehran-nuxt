@@ -67,7 +67,7 @@
 <script>
 import "./style.scss";
 import { mapGetters } from "vuex";
-import viewTrack from "@/graphql/mutations/track/viewTrack.gql";
+import TrackService from '@/service/Track'
 export default {
   props: {
     trackInfo: {
@@ -98,13 +98,8 @@ export default {
     },
     async viewTrack(id) {
       try {
-        const httpResponse = await this.$apollo.mutate({
-          mutation: viewTrack,
-          variables: {
-            id,
-          },
-        });
-        const data = httpResponse.data.viewTrack;
+        const httpRequest = await TrackService.viewTrack(id);
+        const data = httpResponse.viewTrack;
         this.$emit("viewTrack", data);
       } catch (error) {
         //////

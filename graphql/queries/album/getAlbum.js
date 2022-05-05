@@ -1,3 +1,7 @@
+import {
+    gql
+} from "@apollo/client";
+export default gql`
 query getAlbum($id:ID!) {
   getAlbum(id:$id) {
     _id
@@ -12,3 +16,4 @@ query getAlbum($id:ID!) {
     }
   }
 }
+`

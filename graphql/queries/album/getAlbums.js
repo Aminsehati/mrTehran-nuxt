@@ -1,3 +1,7 @@
+import {
+    gql
+} from "@apollo/client";
+export default gql`
 query getAlbums($pagination:Pagination) {
   getAlbums(pagination:$pagination) {
     _id
@@ -12,3 +16,4 @@ query getAlbums($pagination:Pagination) {
     }
   }
 }
+`

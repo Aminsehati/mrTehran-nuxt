@@ -12,8 +12,7 @@
 </template>
 
 <script>
-import getTrack from "@/graphql/queries/track/getTrack.gql";
-import likeTrack from "@/graphql/mutations/track/likeTrack.gql";
+import TrackService from '@/service/Track'
 import "./style.scss";
 export default {
   layout: "main",
@@ -41,23 +40,18 @@ export default {
       this.filters.loading = true;
       try {
         const { id } = this.$route.params;
-        const httpResponse = await this.$apollo.query({
-          query: getTrack,
-          variables: {
-            id,
-          },
-        });
-        const data = httpResponse.data.getTrack;
+        const httpRequest = await TrackService.getTrack(id);
+        const httpResponse = httpRequest.getTrack ;
         this.trackItem = {
           ...this.trackItem,
-          _id: data?._id || "",
-          imgUrl: data?.imgUrl || "",
-          trackName: data?.trackName || "",
-          audioUrl: data?.audioUrl || "",
-          view: data?.view || 0,
-          artists: data?.artists || [],
-          createdAt: data.createdAt && this.convertDate(data.createdAt),
-          like: data?.like || 0,
+          _id: httpResponse?._id || "",
+          imgUrl: httpResponse?.imgUrl || "",
+          trackName: httpResponse?.trackName || "",
+          audioUrl: httpResponse?.audioUrl || "",
+          view: httpResponse?.view || 0,
+          artists: httpResponse?.artists || [],
+          createdAt: httpResponse.createdAt && this.convertDate(httpResponse.createdAt),
+          like: httpResponse?.like || 0,
         };
         this.filters.loading = false;
       } catch (error) {
@@ -68,13 +62,8 @@ export default {
     },
     async likeTrack(item) {
       try {
-        const httpResponse = await this.$apollo.mutate({
-          mutation: likeTrack,
-          variables: {
-            id: item._id,
-          },
-        });
-        const data = httpResponse.data.likeTrack;
+        const httpRequest = await TrackService.likeTrack(item._id);
+        const data = httpRequest.likeTrack;
         this.trackItem.like = data?.like || 0;
         const refComponent = this.$refs.track;
         refComponent.hasLiked = true;

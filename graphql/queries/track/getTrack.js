@@ -1,5 +1,9 @@
-query getTracks($pagination:Pagination , $sort:sortTrack , $filter:filterTrack) {
-  getTracks(pagination:$pagination , sort:$sort , filter:$filter) {
+import {
+    gql
+} from "@apollo/client";
+export default gql`
+query getTrack($id:ID!) {
+  getTrack(id:$id) {
     _id
     imgUrl
     audioUrl
@@ -24,3 +28,4 @@ query getTracks($pagination:Pagination , $sort:sortTrack , $filter:filterTrack) 
     updatedAt
   }
 }
+`

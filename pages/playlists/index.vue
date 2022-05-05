@@ -28,8 +28,7 @@
 </template>
 
 <script>
-import getPlayList from "@/graphql/queries/playList/getPlayLists.gql";
-import getPlayListsCount from "@/graphql/queries/playList/getPlayListsCount.gql";
+import PlayListService from "@/service/PlayList";
 import "./style.scss";
 export default {
   layout: "main",
@@ -51,40 +50,36 @@ export default {
   methods: {
     async getPlayListItem() {
       try {
-        const httpResponse = await this.$apollo.query({
-          query: getPlayList,
-          variables: {
-            pagination: {
-              limit: this.filters.limit,
-              skip: this.filters.skip,
-            },
-          },
+        const pagination = {
+          limit: this.filters.limit,
+          skip: this.filters.skip,
+        };
+        const httpRequest = await PlayListService.getPlayLists({
+          pagination,
         });
-        const data = httpResponse.data.getPlayLists;
-        this.playListsItems = data;
+        const httpResponse = httpRequest.getPlayLists
+        this.playListsItems = httpResponse;
       } catch (error) {}
     },
     async getPlayListsCount() {
       try {
-        const httpResponse = await this.$apollo.query({
-          query: getPlayListsCount,
-        });
-        const data = httpResponse.data.getPlayListsCount;
-        this.filters.tottalCount = data;
+        const httpRequest = await PlayListService.getPlayListsCount();
+        const httpResponse = httpRequest.getPlayListsCount;
+        this.filters.tottalCount = httpResponse;
       } catch (error) {
         ///
       }
     },
-    changeSkip(skip){
+    changeSkip(skip) {
       this.filters.skip = skip;
-      this.getPlayListItem()
-    }
+      this.getPlayListItem();
+    },
   },
-  head(){
+  head() {
     return {
-      title:"Playlists | MrTehran.com"
-    }
-  }
+      title: "Playlists | MrTehran.com",
+    };
+  },
 };
 </script>
 

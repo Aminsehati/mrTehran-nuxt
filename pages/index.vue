@@ -130,10 +130,10 @@
 
 <script>
 import "./style.scss";
-import getPlayList from "@/graphql/queries/playList/getPlayLists.gql";
-import getArtists from "@/graphql/queries/artist/getArtists.gql";
-import getTracks from "@/graphql/queries/track/getTracks.gql";
-import getAlbums from "@/graphql/queries/album/getAlbums.gql";
+import PlayListService from "@/service/PlayList";
+import ArtistService from "@/service/Artist";
+import TrackService from "@/service/Track";
+import AlbumService from "@/service/Album";
 export default {
   layout: "main",
   data() {
@@ -160,17 +160,13 @@ export default {
   methods: {
     async getlistPlaylist() {
       try {
-        const httpResponse = await this.$apollo.query({
-          query: getPlayList,
-          variables: {
-            pagination: {
-              limit: 6,
-              skip: 1,
-            },
-          },
-        });
-        const data = httpResponse.data.getPlayLists;
-        this.listPlaylists = data;
+        const pagination = {
+          limit: 6,
+          skip: 1,
+        };
+        const httpRequest = await PlayListService.getPlayLists({ pagination });
+        const httpResponse = httpRequest.getPlayLists;
+        this.listPlaylists = httpResponse;
       } catch (error) {
         ///
       } finally {
@@ -178,17 +174,19 @@ export default {
     },
     async getListActos() {
       try {
-        const httpResponse = await this.$apollo.query({
-          query: getArtists,
-          variables: {
-            pagination: {
-              limit: 12,
-              skip: 1,
-            },
-          },
+        const sort = {};
+        const filter = {};
+        const pagination = {
+          limit: 12,
+          skip: 1,
+        };
+        const httpRequest = await ArtistService.getArtists({
+          pagination,
+          sort,
+          filter,
         });
-        const data = httpResponse.data.getArtists;
-        this.listActors = data;
+        const httpResponse = httpRequest.getArtists;
+        this.listActors = httpResponse;
       } catch (error) {
         ////
       } finally {
@@ -196,16 +194,18 @@ export default {
     },
     async getListTracksInMonths() {
       try {
-        const httpResponse = await this.$apollo.query({
-          query: getTracks,
-          variables: {
-            pagination: {
-              limit: 12,
-              skip: 1,
-            },
-          },
+        const pagination = {
+          limit: 12,
+          skip: 1,
+        };
+        const sort = {};
+        const filter = {};
+        const httpRequest = await TrackService.getTracks({
+          pagination,
+          sort,
+          filter,
         });
-        const data = httpResponse?.data?.getTracks || [];
+        const data = httpRequest?.getTracks || [];
         this.listTracksBestInMonth = data;
       } catch (error) {
         ////
@@ -213,19 +213,20 @@ export default {
     },
     async getlistTracksRecentlyAdded() {
       try {
-        const httpResponse = await this.$apollo.query({
-          query: getTracks,
-          variables: {
-            pagination: {
-              limit: 6,
-              skip: 1,
-            },
-            sort: {
-              createdAt: -1,
-            },
-          },
+        const pagination = {
+          limit: 6,
+          skip: 1,
+        };
+        const sort = {
+          createdAt: -1,
+        };
+        const filter = {};
+        const httpRequest = await TrackService.getTracks({
+          pagination,
+          sort,
+          filter,
         });
-        const data = httpResponse?.data?.getTracks || [];
+        const data = httpRequest?.getTracks || [];
         this.listTracksRecentlyAdded = data;
       } catch (error) {
         ///
@@ -267,13 +268,15 @@ export default {
     },
     async getNewAlbums() {
       try {
-        const httpResponse = await this.$apollo.query({
-          query: getAlbums,
-        });
-        const data = httpResponse?.data?.getAlbums || [];
+        const pagination = {
+          limit: 4,
+          skip: 1,
+        };
+        const httpRequst = await AlbumService.getAlbums({ pagination });
+        const data = httpRequst?.getAlbums || [];
         this.newAlbums = data;
       } catch (error) {
-        ////
+        console.log(error);
       }
     },
     playAllBestTracks() {

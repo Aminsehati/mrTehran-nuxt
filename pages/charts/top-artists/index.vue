@@ -24,8 +24,8 @@
 
 <script>
 import "./style.scss";
-import getArtists from "@/graphql/queries/artist/getArtists.gql";
-import tabs from '@/content/tabs'
+import tabs from "@/content/tabs";
+import ArtistService from "@/service/Artist";
 export default {
   layout: "main",
   data() {
@@ -42,18 +42,18 @@ export default {
   },
   methods: {
     async getArtists() {
+      this.filters.loading = true;
       try {
-        this.filters.loading = true;
-        const httpRespponse = await this.$apollo.query({
-          query: getArtists,
-          variables: {
-            sort: {
-              Followers: -1,
-            },
-          },
+        const sort = {
+          Followers: -1,
+        };
+        const httpRequest = ArtistService.getArtists({
+          pagination: {},
+          sort,
+          filter: {},
         });
-        const data = httpRespponse.data.getArtists || [];
-        this.artists = data;
+        const httpResponse = httpRequest.getArtists;
+        this.artists = httpResponse;
         this.filters.loading = false;
       } catch (error) {
         ///

@@ -1,6 +1,10 @@
-mutation likeTrack($id:ID!) {
-  likeTrack(id:$id) {
-    _id
+import {
+    gql
+} from "@apollo/client";
+export default gql`
+mutation viewTrack($id:ID!) {
+  viewTrack(id:$id) {
+    _id 
     imgUrl
     audioUrl
     trackName
@@ -10,12 +14,12 @@ mutation likeTrack($id:ID!) {
       _id
       name
       imgUrl
+      name
       coverImgUrl
       Followers
-      createdAt
-      updatedAt
     }
     createdAt
     updatedAt
   }
 }
+`
