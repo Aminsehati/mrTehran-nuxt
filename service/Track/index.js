@@ -1,3 +1,4 @@
+import fetch from 'cross-fetch';
 import getTracks from '@/graphql/queries/track/getTracks'
 import getTrack from '@/graphql/queries/track/getTrack'
 import getTracksCount from '@/graphql/queries/track/getTracksCount'
@@ -6,9 +7,10 @@ import viewTrack from '@/graphql/mutations/track/viewTrack'
 import {
     ApolloClient,
     InMemoryCache,
+    HttpLink
 } from "@apollo/client";
 const client = new ApolloClient({
-    uri: 'http://localhost:3000/graphql',
+    link: new HttpLink({ uri: 'http://localhost:3000/graphql', fetch }),
     cache: new InMemoryCache()
 });
 class TrackService {
@@ -24,6 +26,7 @@ class TrackService {
             });
             return data
         } catch (error) {
+            console.log(error, 'error')
             return error
         }
     }

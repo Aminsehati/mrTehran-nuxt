@@ -1,11 +1,13 @@
+import fetch from 'cross-fetch';
 import getTracksAlbum from '@/graphql/queries/TrackAlbum/getTracksAlbum'
 import getTrackAlbum from '@/graphql/queries/TrackAlbum/getTrackAlbum'
 import {
     ApolloClient,
     InMemoryCache,
+    HttpLink
 } from "@apollo/client";
 const client = new ApolloClient({
-    uri: 'http://localhost:3000/graphql',
+    link: new HttpLink({ uri: 'http://localhost:3000/graphql', fetch }),
     cache: new InMemoryCache()
 });
 class TrackAlbumService {

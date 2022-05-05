@@ -208,7 +208,7 @@ export default {
         const data = httpRequest?.getTracks || [];
         this.listTracksBestInMonth = data;
       } catch (error) {
-        ////
+        console.log(error);
       }
     },
     async getlistTracksRecentlyAdded() {

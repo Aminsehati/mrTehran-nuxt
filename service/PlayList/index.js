@@ -1,3 +1,4 @@
+import fetch from 'cross-fetch';
 import getPlayLists from '@/graphql/queries/playList/getPlayLists.js'
 import getPlayList from '@/graphql/queries/playList/getPlayList.js'
 import getPlayListsCount from '@/graphql/queries/playList/getPlayListsCount'
@@ -5,9 +6,10 @@ import FollowPlayList from '@/graphql/mutations/playList/FollowPlayList'
 import {
     ApolloClient,
     InMemoryCache,
+    HttpLink
 } from "@apollo/client";
 const client = new ApolloClient({
-    uri: 'http://localhost:3000/graphql',
+    link: new HttpLink({ uri: 'http://localhost:3000/graphql', fetch }),
     cache: new InMemoryCache()
 });
 class PlayListService {
