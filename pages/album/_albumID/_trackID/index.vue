@@ -1,7 +1,11 @@
 <template>
   <div class="album-tracks-page">
     <div class="container-sm">
-      <CoverTrack :trackInfo="trackItem" @like="likeTrack" ref="track" />
+     <div v-if="filters.loading === true">
+        <Loading />
+      </div>
+      <div v-else-if="filters.loading === false">
+        <CoverTrack :trackInfo="trackItem" @like="likeTrack" ref="track" />
       <div class="tracks-alumb mt-30">
         <div class="title mb-20">
           <Title> Album Tracks </Title>
@@ -22,6 +26,7 @@
             hasAlbum
           />
         </div>
+      </div>
       </div>
     </div>
   </div>
@@ -46,6 +51,9 @@ export default {
         hasAlbum: true,
         albumID: "",
       },
+      filters:{
+        loading:false
+      },
       tracks: [],
     };
   },
@@ -66,7 +74,7 @@ export default {
           audioUrl: httpResponse?.audioUrl || "",
           view: httpResponse?.view || 0,
           like: httpResponse?.like || 0,
-          createdAt: httpResponse?.createdAt || "",
+          createdAt: httpResponse?.createdAt && this.convertDate(httpResponse?.createdAt) || "",
           _id: httpResponse?._id || "",
           albumID: httpResponse?.albumID || "",
         };

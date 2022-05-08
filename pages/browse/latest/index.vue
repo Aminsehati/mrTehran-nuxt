@@ -20,7 +20,7 @@
 
 <script>
 import "./style.scss";
-import TrackService from '@/service/Track'
+import TrackService from "@/service/Track";
 export default {
   layout: "main",
   data() {
@@ -68,19 +68,20 @@ export default {
   methods: {
     async getTrackItems() {
       try {
-        const httpResponse = await this.$apollo.query({
-          query: getTracks,
-          variables: {
-            pagination: {
-              limit: this.filters.limit,
-              skip: this.filters.skip,
-            },
-            sort: {
-              updatedAt: -1,
-            },
-          },
+        const pagination = {
+          limit: this.filters.limit,
+          skip: this.filters.skip,
+        };
+        const sort = {
+          updatedAt: -1,
+        };
+        const filter = {};
+        const httpRequest = await TrackService.getTracks({
+          pagination,
+          sort,
+          filter,
         });
-        const data = httpResponse.data.getTracks;
+        const data = httpRequest.getTracks;
         this.tracks = data;
       } catch (error) {
         ////
@@ -89,7 +90,7 @@ export default {
     async getTracksCount() {
       try {
         const httpRequest = await TrackService.getTracksCount();
-        const httpResponse = httpRequest.getTracksCount
+        const httpResponse = httpRequest.getTracksCount;
         this.filters.tottalCount = httpResponse;
       } catch (error) {
         ///
