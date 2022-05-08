@@ -1,19 +1,11 @@
 import fetch from 'cross-fetch';
 import getTracksAlbum from '@/graphql/queries/TrackAlbum/getTracksAlbum'
 import getTrackAlbum from '@/graphql/queries/TrackAlbum/getTrackAlbum'
-import {
-    ApolloClient,
-    InMemoryCache,
-    HttpLink
-} from "@apollo/client";
-const client = new ApolloClient({
-    link: new HttpLink({ uri: 'http://localhost:3000/graphql', fetch }),
-    cache: new InMemoryCache()
-});
+import api from '@/service/api'
 class TrackAlbumService {
     async getTracksAlbum({ pagination, sort, filter }) {
         try {
-            const { data } = await client.query({
+            const { data } = await api.query({
                 query: getTracksAlbum,
                 variables: {
                     pagination,
@@ -28,7 +20,7 @@ class TrackAlbumService {
     }
     async getTrackAlbum(id) {
         try {
-            const { data } = await client.query({
+            const { data } = await api.query({
                 query: getTrackAlbum,
                 variables: {
                     id

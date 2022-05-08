@@ -4,19 +4,11 @@ import getTrack from '@/graphql/queries/track/getTrack'
 import getTracksCount from '@/graphql/queries/track/getTracksCount'
 import likeTrack from '@/graphql/mutations/track/likeTrack'
 import viewTrack from '@/graphql/mutations/track/viewTrack'
-import {
-    ApolloClient,
-    InMemoryCache,
-    HttpLink
-} from "@apollo/client";
-const client = new ApolloClient({
-    link: new HttpLink({ uri: 'http://localhost:3000/graphql', fetch }),
-    cache: new InMemoryCache()
-});
+import api from '@/service/api'
 class TrackService {
     async getTracks({ pagination, sort, filter }) {
         try {
-            const { data } = await client.query({
+            const { data } = await api.query({
                 query: getTracks,
                 variables: {
                     pagination,
@@ -32,7 +24,7 @@ class TrackService {
     }
     async getTrack(id) {
         try {
-            const { data } = await client.query({
+            const { data } = await api.query({
                 query: getTrack,
                 variables: {
                     id
@@ -45,7 +37,7 @@ class TrackService {
     }
     async getTracksCount() {
         try {
-            const { data } = await client.query({
+            const { data } = await api.query({
                 query: getTracksCount
             });
             return data
@@ -55,7 +47,7 @@ class TrackService {
     }
     async likeTrack(id) {
         try {
-            const { data } = await client.mutate({
+            const { data } = await api.mutate({
                 mutation: likeTrack,
                 variables: {
                     id
@@ -68,7 +60,7 @@ class TrackService {
     }
     async viewTrack(id) {
         try {
-            const { data } = await client.mutate({
+            const { data } = await api.mutate({
                 mutation: viewTrack,
                 variables: {
                     id
