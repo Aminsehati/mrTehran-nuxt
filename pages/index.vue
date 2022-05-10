@@ -208,7 +208,7 @@ export default {
         const data = httpRequest?.getTracks || [];
         this.listTracksBestInMonth = data;
       } catch (error) {
-        console.log(error);
+        /////
       }
     },
     async getlistTracksRecentlyAdded() {
@@ -276,14 +276,13 @@ export default {
         const data = httpRequst?.getAlbums || [];
         this.newAlbums = data;
       } catch (error) {
-        console.log(error);
+        ////
       }
     },
     playAllBestTracks() {
       this.$store.commit("player/setListsPlayer", this.listTracksBestInMonth);
     },
     playAllRecentlyTrack(){
-      console.log(this.listTracksRecentlyAdded);
       this.$store.commit("player/setListsPlayer", this.listTracksRecentlyAdded);
     }
   },

@@ -100,7 +100,7 @@ export default {
     },
     linkTrack() {
       if (this.hasAlbum) {
-        return `/album/${this.trackInfo.albumID}/${this.trackInfo._id}`;
+        return `/album/${this.trackInfo.album._id}/${this.trackInfo._id}`;
       } else {
         return `/track/${this.trackInfo._id}`;
       }
@@ -109,8 +109,7 @@ export default {
       try {
         const id = item._id;
         if (id) {
-          const httpRequest = await TrackAlbumService.viewTrackAlbum(id);
-          console.log(httpRequest);
+          await TrackAlbumService.viewTrackAlbum(id);
         }
       } catch (error) {}
     },

@@ -33,7 +33,7 @@
 <script>
 import "../style.scss";
 import TrackAlbumService from "@/service/TrackAlbum";
-import AlbumService from '@/service/Album'
+import AlbumService from "@/service/Album";
 export default {
   layout: "main",
   data() {
@@ -48,21 +48,6 @@ export default {
     };
   },
   methods: {
-    async getAlbum() {
-      try {
-        const id = this.$route.params.albumID;
-        const httpRequest = await AlbumService.getAlbum(id);
-        const httpResponse = httpRequest.getAlbum ;
-        this.albumInfo = {
-          ...this.albumInfo,
-          name: httpResponse?.name || "",
-          imgUrl: httpResponse?.imgUrl || "",
-          artists: httpResponse?.artists || [],
-        };
-      } catch (error) {
-        ////
-      }
-    },
     playTracksAlbum() {
       this.$store.commit("player/setListsPlayer", this.tracks);
     },
@@ -79,23 +64,22 @@ export default {
           sort,
           filter,
         });
-        const httpResponse = httpRequest.getTracksAlbum ;
+        const httpResponse = httpRequest.getTracksAlbum;
         this.tracks = httpResponse.map((item) => {
           return {
             ...item,
-            artists: this.albumInfo?.artists || [],
-            name: this.albumInfo?.name || "",
-            imgUrl: this.albumInfo?.imgUrl || "",
+            artists: item?.album?.artists || [],
+            name: item?.album?.name || "",
+            imgUrl: item?.album?.imgUrl || "",
             hasAlbum: true,
           };
         });
       } catch (error) {
-        /////
+        return this.$nuxt.error({ statusCode: 404, message: error.message });
       }
     },
   },
   async fetch() {
-    await this.getAlbum();
     await this.getTracksAlbum();
   },
 };
