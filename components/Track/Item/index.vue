@@ -49,7 +49,8 @@
 <script>
 import "./style.scss";
 import { mapGetters } from "vuex";
-import TrackService from '@/service/Track'
+import TrackService from "@/service/Track";
+import TrackAlbumService from "@/service/TrackAlbum";
 export default {
   props: {
     trackInfo: {
@@ -76,7 +77,11 @@ export default {
         this.$store.commit("player/setActivePlayer", track);
         this.audioPlayer.src = this.getAudioUrl(track.audioUrl);
         this.$store.commit("player/addToPlayerLists", track);
-        await this.viewTrack();
+        if (!track.album) {
+          await this.viewTrack();
+        } else {
+          this.viewTrackAlbum(track);
+        }
       }
       this.$store.commit("player/setChangeStatusPlaying", true);
       this.audioPlayer.play();
@@ -99,6 +104,15 @@ export default {
       } else {
         return `/track/${this.trackInfo._id}`;
       }
+    },
+    async viewTrackAlbum(item) {
+      try {
+        const id = item._id;
+        if (id) {
+          const httpRequest = await TrackAlbumService.viewTrackAlbum(id);
+          console.log(httpRequest);
+        }
+      } catch (error) {}
     },
   },
 };

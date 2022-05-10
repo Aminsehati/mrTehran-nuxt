@@ -29,12 +29,14 @@
               class="mr-10"
             />
 
-            {{ navbar.name }}
+            <span>
+              {{ navbar.name }}
+            </span>
           </nuxt-link>
         </li>
         <li :class="['navbar_item text-light']" @click="$emit('onSearch')">
           <IconSearch width="15" height="15" />
-          Search
+          <span> Search </span>
         </li>
       </ul>
     </div>

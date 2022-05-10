@@ -4,28 +4,10 @@
       <Loading v-if="filters.loading" />
       <div v-else>
         <CoverArtist :ArtistInfo="ArtistInfo" @follow="followArtist" />
-        <div class="title_ mb-15">
-          <Title> All Tracks </Title>
-        </div>
-        <div
-          class="
-            tracks-wrapper
-            grid grid
-            xl:grid-cols-3
-            sm:grid-cols-2
-            gap-x-20 gap-y-20
-          "
-        >
-          <TrackItem
-            :trackInfo="track"
-            v-for="track in listTracks"
-            :key="track.id"
-          />
-        </div>
-        <div class="title_ mt-30 mb-15">
-          <Title> All Albums </Title>
-        </div>
-        <div class="tracks-albums">
+        <div v-show="listTracks.length" ref="singleTrack">
+          <div class="title_ mb-15">
+            <Title> All Tracks </Title>
+          </div>
           <div
             class="
               tracks-wrapper
@@ -37,9 +19,31 @@
           >
             <TrackItem
               :trackInfo="track"
-              v-for="track in tracksAlbums"
-              :key="track._id"
+              v-for="track in listTracks"
+              :key="track.id"
             />
+          </div>
+        </div>
+        <div v-show="tracksAlbums.length" ref="trackAlbum">
+          <div class="title_ mt-30 mb-15">
+            <Title> All Albums </Title>
+          </div>
+          <div class="tracks-albums" ref="trackAlbum">
+            <div
+              class="
+                tracks-wrapper
+                grid grid
+                xl:grid-cols-3
+                sm:grid-cols-2
+                gap-x-20 gap-y-20
+              "
+            >
+              <TrackItem
+                :trackInfo="track"
+                v-for="track in tracksAlbums"
+                :key="track._id"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -49,8 +53,8 @@
 
 <script>
 import ArtistService from "@/service/Artist";
-import TrackService from '@/service/Track';
-import TrackAlbumService from '@/service/TrackAlbum'
+import TrackService from "@/service/Track";
+import TrackAlbumService from "@/service/TrackAlbum";
 import "./style.scss";
 export default {
   layout: "main",
@@ -70,8 +74,12 @@ export default {
   },
   async fetch() {
     await this.getArtist();
-    await this.getListTracks();
-    await this.getListTracksAlbum();
+  },
+  mounted() {
+    window.addEventListener("scroll", this.onscroll);
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.onscroll);
   },
   methods: {
     async getArtist() {
@@ -99,9 +107,9 @@ export default {
       try {
         const filter = {
           artistID: id,
-        }
-        const httpRequest = await TrackService.getTracks({filter});
-        const httpResponse = httpRequest.getTracks ;
+        };
+        const httpRequest = await TrackService.getTracks({ filter });
+        const httpResponse = httpRequest.getTracks;
         this.listTracks = httpResponse;
       } catch (error) {
         //////
@@ -109,28 +117,62 @@ export default {
     },
     async getListTracksAlbum() {
       try {
-        
+        const { id } = this.$route.params;
+        let pagination = {};
+        let sort = {};
+        let filter = {
+          artists: [id],
+        };
+        const httpRequest = await TrackAlbumService.getTracksAlbum({
+          pagination,
+          sort,
+          filter,
+        });
+        const data = httpRequest.getTracksAlbum || [];
+        this.tracksAlbums = data.map((item) => {
+          return {
+            imgUrl: item.album.imgUrl,
+            name: item.name,
+            audioUrl: item.audioUrl,
+            trackName: item.trackName,
+            view: item.view,
+            like: item.like,
+            artists: item.album.artists,
+          };
+        });
       } catch (error) {
-        console.log(error);
+        ////
       }
     },
     async followArtist() {
       try {
         this.filters.loading = true;
         const { id } = this.$route.params;
-        const httpResponse = await this.$apollo.mutate({
-          mutation: FollowArtist,
-          variables: {
-            id,
-          },
-        });
-        const data = httpResponse.data.FollowArtist;
+        const httpRequest = await ArtistService.FollowArtist(id);
+        const data = httpRequest.FollowArtist;
         this.ArtistInfo.countFollowers = data.Followers;
         this.filters.loading = false;
       } catch (error) {
         ////
       } finally {
         this.filters.loading = false;
+      }
+    },
+    async onscroll() {
+      const trackAlbum = this.$refs.trackAlbum;
+      const singleTrack = this.$refs.singleTrack;
+      const innerHeight = window.innerHeight;
+      if (trackAlbum) {
+        const marginTopArtist = trackAlbum.getBoundingClientRect().top;
+        if (marginTopArtist - innerHeight < -50) {
+          await this.getListTracksAlbum();
+        }
+      }
+      if (singleTrack) {
+        const marginSingleTrack = singleTrack.getBoundingClientRect().top;
+        if (marginSingleTrack - innerHeight < -50) {
+          await this.getListTracks();
+        }
       }
     },
   },

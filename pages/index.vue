@@ -9,7 +9,7 @@
           >
             <Title> Recently Added </Title>
             <div class="flex items-center">
-              <Button class="mr-15" secondary>
+              <Button class="mr-15" secondary @onClick="playAllRecentlyTrack">
                 <i class="fa-solid fa-play mr-10"></i>
                 Play All
               </Button>
@@ -282,6 +282,10 @@ export default {
     playAllBestTracks() {
       this.$store.commit("player/setListsPlayer", this.listTracksBestInMonth);
     },
+    playAllRecentlyTrack(){
+      console.log(this.listTracksRecentlyAdded);
+      this.$store.commit("player/setListsPlayer", this.listTracksRecentlyAdded);
+    }
   },
 };
 </script>
