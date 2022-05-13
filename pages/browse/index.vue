@@ -5,6 +5,10 @@
       <Tabs :tabs="tabs" />
       <div class="title mb-20">
         <Title> Featured </Title>
+        <Button class="mr-15" secondary @onClick="playAllTracks">
+          <i class="fa-solid fa-play mr-10"></i>
+          Play All
+        </Button>
       </div>
       <div class="grid xl:grid-cols-3 sm:grid-cols-2 gap-x-20 gap-y-20 mb-25">
         <TrackItem :trackInfo="track" v-for="track in tracks" :key="track.id" />
@@ -91,6 +95,9 @@ export default {
     chnageSkip(skip) {
       this.filters.skip = skip;
       this.getTrackItems();
+    },
+    playAllTracks() {
+      this.$store.commit("player/setListsPlayer", this.tracks);
     },
   },
 };

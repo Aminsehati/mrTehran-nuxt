@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import TrackService from '@/service/Track'
+import { TrackService } from "@/service";
 import "./style.scss";
 export default {
   layout: "main",
@@ -41,7 +41,7 @@ export default {
       try {
         const { id } = this.$route.params;
         const httpRequest = await TrackService.getTrack(id);
-        const httpResponse = httpRequest.getTrack ;
+        const httpResponse = httpRequest.getTrack;
         this.trackItem = {
           ...this.trackItem,
           _id: httpResponse?._id || "",
@@ -50,7 +50,8 @@ export default {
           audioUrl: httpResponse?.audioUrl || "",
           view: httpResponse?.view || 0,
           artists: httpResponse?.artists || [],
-          createdAt: httpResponse.createdAt && this.convertDate(httpResponse.createdAt),
+          createdAt:
+            httpResponse.createdAt && this.convertDate(httpResponse.createdAt),
           like: httpResponse?.like || 0,
         };
         this.filters.loading = false;
@@ -68,7 +69,7 @@ export default {
         const refComponent = this.$refs.track;
         refComponent.hasLiked = true;
       } catch (error) {
-        ////
+        console.log(error);
       }
     },
   },

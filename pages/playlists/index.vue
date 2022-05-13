@@ -1,28 +1,33 @@
 <template>
   <div class="playlists-page">
     <div class="container-sm">
-      <Title class="mb-20"> Exclusive Playlists </Title>
-      <div
-        class="
-          playlist-wrapper
-          grid
-          xl:grid-cols-3
-          sm:grid-cols-2
-          gap-x-20 gap-y-20
-          mb-30
-        "
-      >
-        <PlayListItem
-          v-for="playlist in playListsItems"
-          :key="playlist.id"
-          :playListInfo="playlist"
+      <div v-if="filters.loading === true">
+        <Loading />
+      </div>
+      <div v-else-if="filters.loading === false">
+        <Title class="mb-20"> Exclusive Playlists </Title>
+        <div
+          class="
+            playlist-wrapper
+            grid
+            xl:grid-cols-3
+            sm:grid-cols-2
+            gap-x-20 gap-y-20
+            mb-30
+          "
+        >
+          <PlayListItem
+            v-for="playlist in playListsItems"
+            :key="playlist.id"
+            :playListInfo="playlist"
+          />
+        </div>
+        <Pagination
+          :tottalCount="filters.tottalCount"
+          :limit="filters.limit"
+          @onChange="changeSkip"
         />
       </div>
-      <Pagination
-        :tottalCount="filters.tottalCount"
-        :limit="filters.limit"
-        @onChange="changeSkip"
-      />
     </div>
   </div>
 </template>
@@ -57,7 +62,7 @@ export default {
         const httpRequest = await PlayListService.getPlayLists({
           pagination,
         });
-        const httpResponse = httpRequest.getPlayLists
+        const httpResponse = httpRequest.getPlayLists;
         this.playListsItems = httpResponse;
       } catch (error) {}
     },

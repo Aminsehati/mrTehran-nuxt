@@ -1,7 +1,7 @@
 <template>
   <div class="track-chart">
     <div class="track-image">
-      <nuxt-link :to="`/track/${(trackInfo, _id)}`">
+      <nuxt-link :to="`/track/${(trackInfo._id)}`">
         <img :src="getImageUrl(trackInfo.imgUrl)" />
       </nuxt-link>
     </div>

@@ -9,7 +9,7 @@
       </div>
       <chartArtist
         v-for="(artist, index) in artists"
-        :key="artist.id"
+        :key="artist._id"
         :artistInfo="artist"
         class="mb-20"
       >
@@ -47,8 +47,11 @@ export default {
         const sort = {
           Followers: -1,
         };
-        const httpRequest = ArtistService.getArtists({
-          pagination: {},
+        const httpRequest = await ArtistService.getArtists({
+          pagination: {
+            limit: 50,
+            skip: 1,
+          },
           sort,
           filter: {},
         });
@@ -56,7 +59,7 @@ export default {
         this.artists = httpResponse;
         this.filters.loading = false;
       } catch (error) {
-        ///
+        ////
       } finally {
         this.filters.loading = false;
       }

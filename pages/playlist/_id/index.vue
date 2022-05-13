@@ -1,7 +1,7 @@
 <template>
   <div class="playlist-page">
-    <Loading v-if="filters.loading" />
-    <div class="container-sm" v-else>
+    <Loading v-if="filters.loading === true" />
+    <div class="container-sm" v-else-if="filters.loading === false">
       <CoverPlayList :playListInfo="playListInfo" @onFollow="followArtist" />
       <div class="title -playlist mb-20">
         <Title> Tracklist </Title>
@@ -45,8 +45,9 @@ export default {
       try {
         this.filters.loading = true;
         const { id } = this.$route.params;
-        const httpRequest = PlayListService.getPlayList(id);
+        const httpRequest = await PlayListService.getPlayList(id);
         const httpResponse = httpRequest.getPlayList;
+        console.log(httpResponse);
         this.playListInfo = {
           ...this.playListInfo,
           name: httpResponse?.name,
@@ -64,13 +65,8 @@ export default {
       try {
         this.filters.loading = true;
         const { id } = this.$route.params;
-        const httpResponse = await this.$apollo.mutate({
-          mutation: FollowPlayList,
-          variables: {
-            id,
-          },
-        });
-        const data = httpResponse.data.FollowPlayList;
+        const httpRequest = await PlayListService.FollowPlayList(id);
+        const data = httpRequest.FollowPlayList;
         this.playListInfo.Followers = data.Followers || 0;
         this.filters.loading = false;
       } catch (error) {
@@ -83,13 +79,13 @@ export default {
       try {
         const filter = {
           playlistID: this.$route.params.id,
-        }
+        };
         const httpRequest = await TrackService.getTracks({
           pagination: {},
           sort: {},
-          filter
+          filter,
         });
-        const httpResponse = httpRequest.getTracks ;
+        const httpResponse = httpRequest.getTracks;
         this.tracks = httpResponse;
       } catch (error) {
         ///

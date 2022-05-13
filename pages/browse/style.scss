@@ -1,3 +1,8 @@
 .browse_page{
     min-height: 100vh;
+    .title{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 }

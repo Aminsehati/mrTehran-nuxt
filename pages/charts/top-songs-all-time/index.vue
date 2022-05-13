@@ -6,6 +6,10 @@
     <div class="container-sm" v-show="!filters.loading">
       <div class="title-top-song-all-time mb-20">
         <Title> Top Songs Of All Time </Title>
+        <Button class="mr-15" secondary @onClick="playAllBestTracks">
+          <i class="fa-solid fa-play mr-10"></i>
+          Play All
+        </Button>
       </div>
       <ChartTrack
         v-for="(track, index) in tracks"
@@ -53,9 +57,13 @@ export default {
         const sort = {
           view: -1,
         };
-        const filter = {}
-        const httpRequest = TrackService.getTracks({ pagination, sort ,filter});
-        const httpResponse = httpRequest.getTracks ;
+        const filter = {};
+        const httpRequest = await TrackService.getTracks({
+          pagination,
+          sort,
+          filter,
+        });
+        const httpResponse = httpRequest.getTracks;
         this.tracks = httpResponse;
         this.filters.loading = false;
       } catch (error) {

@@ -6,6 +6,10 @@
     <div class="container-sm" v-show="!filters.loading">
       <div class="title mb-20">
         <Title> Top Songs Week </Title>
+        <Button class="mr-15" secondary @onClick="playTracksInWeek">
+          <i class="fa-solid fa-play mr-10"></i>
+          Play All
+        </Button>
       </div>
       <ChartTrack
         v-for="(track, index) in tracks"
@@ -57,7 +61,7 @@ export default {
           sort,
           filter: {},
         });
-        const httpResponse = httpRequest.getTracks ;
+        const httpResponse = httpRequest.getTracks;
         this.tracks = httpResponse;
         this.filters.loading = false;
       } catch (error) {
@@ -75,6 +79,9 @@ export default {
     },
     async viewTrack() {
       await this.getTopTracks();
+    },
+    playTracksInWeek() {
+      this.$store.commit("player/setListsPlayer", this.tracks);
     },
   },
   head() {

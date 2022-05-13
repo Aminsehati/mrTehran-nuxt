@@ -1,3 +1,9 @@
-.browse_latest_page{
+.browse_latest_page {
     min-height: 100vh;
+
+    .title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 }

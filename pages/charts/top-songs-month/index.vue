@@ -6,11 +6,15 @@
     <div class="container-sm" v-show="!filters.loading">
       <div class="title mb-20">
         <Title> Top Songs Month </Title>
+        <Button class="mr-15" secondary @onClick="playTracksInMonth">
+          <i class="fa-solid fa-play mr-10"></i>
+          Play All
+        </Button>
       </div>
       <ChartTrack
         v-for="(track, index) in tracks"
-        :key="track._id"
         :trackInfo="track"
+        :key="track._id"
         class="mb-20"
         @viewTrack="viewTrack"
       >
@@ -58,7 +62,7 @@ export default {
           sort,
           filter,
         });
-        const httpResponse = httpRequest.getTracks ;
+        const httpResponse = httpRequest.getTracks;
         this.tracks = httpResponse;
         this.filters.loading = false;
       } catch (error) {
@@ -76,6 +80,9 @@ export default {
     },
     async viewTrack() {
       await this.getTopTracksInMonth();
+    },
+    playTracksInMonth() {
+      this.$store.commit("player/setListsPlayer", this.tracks);
     },
   },
   head() {

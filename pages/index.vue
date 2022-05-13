@@ -45,7 +45,17 @@
           <div class="mb-20 flex justify-between items-center">
             <Title> New Albums</Title>
           </div>
-          <div class="grid grid-cols-4 gap-x-15 gap-y-20">
+          <div
+            class="
+              grid
+              gap-x-15
+              lg:grid-cols-4
+              sm:grid-cols-2
+              xs:grid-cols-2
+              grid-cols-1
+              gap-y-20
+            "
+          >
             <AlbumItem
               v-for="album in newAlbums"
               :key="album._id"
@@ -130,10 +140,11 @@
 
 <script>
 import "./style.scss";
-import PlayListService from "@/service/PlayList";
-import ArtistService from "@/service/Artist";
-import TrackService from "@/service/Track";
-import AlbumService from "@/service/Album";
+// import PlayListService from "@/service/PlayList";
+// import ArtistService from "@/service/Artist";
+// import TrackService from "@/service/Track";
+// import AlbumService from "@/service/Album";
+import { AlbumService ,TrackService ,ArtistService ,PlayListService} from "@/service/index";
 export default {
   layout: "main",
   data() {
@@ -282,9 +293,9 @@ export default {
     playAllBestTracks() {
       this.$store.commit("player/setListsPlayer", this.listTracksBestInMonth);
     },
-    playAllRecentlyTrack(){
+    playAllRecentlyTrack() {
       this.$store.commit("player/setListsPlayer", this.listTracksRecentlyAdded);
-    }
+    },
   },
 };
 </script>

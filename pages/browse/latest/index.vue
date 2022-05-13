@@ -5,6 +5,10 @@
       <Tabs :tabs="tabs" />
       <div class="title mb-20">
         <Title> Latest </Title>
+        <Button class="mr-15" secondary @onClick="playTrackPopular">
+          <i class="fa-solid fa-play mr-10"></i>
+          Play All
+        </Button>
       </div>
       <div class="grid xl:grid-cols-3 sm:grid-cols-2 gap-x-20 gap-y-20 mb-25">
         <TrackItem :trackInfo="track" v-for="track in tracks" :key="track.id" />

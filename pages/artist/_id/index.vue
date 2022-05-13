@@ -1,8 +1,8 @@
 <template>
   <div class="artist-page">
     <div class="container-sm">
-      <Loading v-if="filters.loading" />
-      <div v-else>
+      <Loading v-if="filters.loading === true" />
+      <div v-else-if="filters.loading === false">
         <CoverArtist :ArtistInfo="ArtistInfo" @follow="followArtist" />
         <div v-show="listTracks.length" ref="singleTrack">
           <div class="title_ mb-15">

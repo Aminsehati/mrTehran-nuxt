@@ -5,6 +5,10 @@
       <Tabs :tabs="tabs" />
       <div class="title mb-20">
         <Title> Popular </Title>
+        <Button class="mr-15" secondary @onClick="playTrackPopular">
+          <i class="fa-solid fa-play mr-10"></i>
+          Play All
+        </Button>
       </div>
       <div class="grid xl:grid-cols-3 sm:grid-cols-2 gap-x-20 gap-y-20 mb-25">
         <TrackItem :trackInfo="track" v-for="track in tracks" :key="track.id" />
@@ -77,7 +81,7 @@ export default {
           view: -1,
         };
         const httpRequest = await TrackService.getTracks({ pagination, sort });
-        const httpResponse = httpRequest.getTracks ;
+        const httpResponse = httpRequest.getTracks;
         this.filters.loading = false;
         this.tracks = httpResponse;
       } catch (error) {
@@ -99,6 +103,9 @@ export default {
       this.filters.skip = skip;
       this.getTrackItems();
     },
+    playTrackPopular(){
+      this.$store.commit("player/setListsPlayer", this.tracks);
+    }
   },
 };
 </script>

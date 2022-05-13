@@ -1,4 +1,9 @@
 .chart-top-song-week-page{
     min-height: 100vh;
     padding-bottom: 30px;
+    .title{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 }
